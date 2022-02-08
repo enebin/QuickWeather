@@ -124,6 +124,8 @@ class CurrentWeather: ObservableObject {
     init(item: CurrentWeatherResponse) {
         self.item = item
         
+        print(item)
+        
         let session = URLSession.shared
         let url = URL(string: "https://openweathermap.org/img/w/\(item.weather[0].iconName).png")!
         session.dataTask(with: url) { data, response, error in

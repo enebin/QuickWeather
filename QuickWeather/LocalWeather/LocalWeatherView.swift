@@ -22,19 +22,26 @@ struct LocalWeatherView: View {
             
             if let weather = viewModel.weather {
                 VStack {
-                    Spacer()
-                    // Weather description with icon ahead
-                    WeatherWithIcon
-                    
-                    // Main Temp
-                    Text("\(weather.temperature)º")
-                        .font(.system(size: 100))
-                        .foregroundColor(.white)
-                    
-                    // Min/Max Temp
-                    MinAndMaxTemp
-                    
-                    Spacer()
+                    ZStack {
+                        MapView()
+                        VStack {
+                            Header
+                            
+                            Spacer()
+                            // Weather description with icon ahead
+                            WeatherWithIcon
+                            
+                            // Main Temp
+                            Text("\(weather.temperature)º")
+                                .font(.system(size: 100))
+                                .foregroundColor(.white)
+                            
+                            // Min/Max Temp
+                            MinAndMaxTemp
+                            
+                            Spacer()
+                        }
+                    }
                     Divider()
                     
                     // Temp feels like
@@ -47,14 +54,8 @@ struct LocalWeatherView: View {
                     MoreInformations
                         .padding(.horizontal)
                         .padding(.bottom, 35)
-                    
-                    // Button that navigates to another view.
-                    NavigateButton
-                        .padding(.bottom, 15)
                 }
-                .navigationBarTitle("\(weather.name)")
-                .navigationBarTitleTextColor(.white)    // Personally added method. It changes navigation bar item's color.
-                .navigationBarTitleDisplayMode(.inline)
+                .padding(.horizontal)
             } else {
                 ProgressView()
             }
@@ -92,6 +93,20 @@ extension LocalWeatherView {
         
         return LinearGradient(colors: [startColor, endColor],
                               startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+    
+    var Header: some View {
+        VStack {
+            if let viewModel = viewModel.weather {
+                Text("It seems you're at...")
+                    .font(.subheadline)
+                    .foregroundColor(.white)
+                Text("\(viewModel.name)")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+            }
+        }
     }
     
     var WeatherWithIcon: some View {
@@ -171,24 +186,6 @@ extension LocalWeatherView {
         .foregroundColor(.white)
         .font(.system(size: 25))
     }
-    
-    var NavigateButton: some View {
-        //        Group {
-        //            if let lon = locationManager.longitude, let lat = locationManager.latitude {
-        //                NavigationLink(destination: Text("temp")) {
-        //                    Text("more...")
-        //                        .font(.system(size: 20))
-        //                        .frame(width: 140, height: 50, alignment: .center)
-        //                        .foregroundColor(.white)
-        //                        .background(RoundedRectangle(cornerRadius: 10)
-        //                                        .fill(.gray.opacity(0.1)))
-        //                }
-        //            } else {
-        ProgressView()
-        //            }
-        //        }
-    }
-    
     
     @ViewBuilder
     func FigWithUnit(figure: String, unit: String) -> some View {

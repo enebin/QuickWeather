@@ -13,6 +13,7 @@ class WeatherDataManager {
         case network
         case parsing
         case fetching
+        case url
         
         var description: String {
             switch self {
@@ -22,6 +23,8 @@ class WeatherDataManager {
                 return "Parsing error"
             case .fetching:
                 return "File fetching error"
+            case .url:
+                return "Url error"
             }
         }
     }
@@ -47,9 +50,12 @@ class WeatherDataManager {
         // Make URLSession.datapublisher which requests informations from the server
         let session = URLSession.shared
         let decoder = JSONDecoder()
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(name)&appid=\(weatherAPIKey!)")
-        
-        return session.dataTaskPublisher(for: url!)
+        let parsedName = String(name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(parsedName)&appid=\(weatherAPIKey!)")
+        guard let url = url else {
+            return Fail(error: WeatherError.fetching as Error).eraseToAnyPublisher()
+        }
+        return session.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: CurrentWeatherResponse.self, decoder: decoder)
             .eraseToAnyPublisher()

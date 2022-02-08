@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9B4AA32327AFD30800547AD8 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4AA32227AFD30800547AD8 /* FirstView.swift */; };
+		9BDD90C227B2A9B10072D47F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDD90C127B2A9B10072D47F /* MapView.swift */; };
 		9BE5001527AE4B5500977BB2 /* QuickWeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5001427AE4B5500977BB2 /* QuickWeatherApp.swift */; };
 		9BE5001927AE4B5700977BB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE5001827AE4B5700977BB2 /* Assets.xcassets */; };
 		9BE5001C27AE4B5700977BB2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE5001B27AE4B5700977BB2 /* Preview Assets.xcassets */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		9B4AA32227AFD30800547AD8 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		9B4AA32427AFDDE600547AD8 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9BDD90C127B2A9B10072D47F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		9BE5001127AE4B5500977BB2 /* QuickWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BE5001427AE4B5500977BB2 /* QuickWeatherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickWeatherApp.swift; sourceTree = "<group>"; };
 		9BE5001827AE4B5700977BB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				9BE5002727AE4BA200977BB2 /* LocalWeather.swift */,
 				9BE5002827AE4BA200977BB2 /* LocalWeatherView.swift */,
 				9BE5002927AE4BA200977BB2 /* LocalWeatherViewModel.swift */,
+				9BDD90C127B2A9B10072D47F /* MapView.swift */,
 			);
 			path = LocalWeather;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BE5004027AE4BA200977BB2 /* WeatherListVIewModel+Enum.swift in Sources */,
+				9BDD90C227B2A9B10072D47F /* MapView.swift in Sources */,
 				9BE5003727AE4BA200977BB2 /* LocalWeather.swift in Sources */,
 				9BE5003827AE4BA200977BB2 /* LocalWeatherView.swift in Sources */,
 				9BE5004127AE4BA200977BB2 /* WeatherListView.swift in Sources */,
