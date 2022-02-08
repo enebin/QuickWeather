@@ -60,7 +60,7 @@ struct CurrentWeatherResponse: Decodable {
 
 class CurrentWeather: ObservableObject {
     @Published var icon: Image?
-    private let item: CurrentWeatherResponse
+    private var item: CurrentWeatherResponse
     var subscriptions = Set<AnyCancellable>()
     
     private func toCelcius(from kelvin: Double) -> Double {
@@ -119,10 +119,6 @@ class CurrentWeather: ObservableObject {
     
     var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D.init(latitude: item.coord.lat, longitude: item.coord.lon)
-    }
-    
-    private func getIconImage() {
-        
     }
     
     init(item: CurrentWeatherResponse) {

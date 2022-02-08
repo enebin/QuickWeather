@@ -38,7 +38,7 @@ class WeatherListViewModel: ObservableObject {
                             print("Failed with error: \(error)")
                             return
                         case .finished:
-                            print("Succeesfully finished!")
+                            print("[currentWeatherPublisher]: Succeesfully finished!")
                         }
                     }, receiveValue: { value in
                         self.cityViewSource.append(value)

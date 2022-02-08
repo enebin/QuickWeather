@@ -24,7 +24,7 @@ struct CurrentWeatherRowView: View {
             if let icon = viewModel.icon {
                 icon
             } else {
-                Image(systemName: "xmark")
+                Image(systemName: "wifi.exclamationmark")
             }
         }
         .font(.system(size: 20))

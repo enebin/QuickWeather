@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B4AA32327AFD30800547AD8 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4AA32227AFD30800547AD8 /* FirstView.swift */; };
 		9BE5001527AE4B5500977BB2 /* QuickWeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5001427AE4B5500977BB2 /* QuickWeatherApp.swift */; };
 		9BE5001927AE4B5700977BB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE5001827AE4B5700977BB2 /* Assets.xcassets */; };
 		9BE5001C27AE4B5700977BB2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE5001B27AE4B5700977BB2 /* Preview Assets.xcassets */; };
@@ -27,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B4AA32227AFD30800547AD8 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
+		9B4AA32427AFDDE600547AD8 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9BE5001127AE4B5500977BB2 /* QuickWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BE5001427AE4B5500977BB2 /* QuickWeatherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickWeatherApp.swift; sourceTree = "<group>"; };
 		9BE5001827AE4B5700977BB2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,12 +84,14 @@
 				9BE5003027AE4BA200977BB2 /* WeatherList */,
 				9BE5002B27AE4BA200977BB2 /* CurrentWeather */,
 				9BE5002627AE4BA200977BB2 /* LocalWeather */,
+				9B4AA32227AFD30800547AD8 /* FirstView.swift */,
 				9BE5002F27AE4BA200977BB2 /* LocationManager.swift */,
 				9BE5002527AE4BA200977BB2 /* WeatherDataManager.swift */,
 				9BE5001427AE4B5500977BB2 /* QuickWeatherApp.swift */,
 				9BE5002A27AE4BA200977BB2 /* APIKeys.plist */,
 				9BE5001827AE4B5700977BB2 /* Assets.xcassets */,
 				9BE5001A27AE4B5700977BB2 /* Preview Content */,
+				9B4AA32427AFDDE600547AD8 /* MyPlayground.playground */,
 			);
 			path = QuickWeather;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 				9BE5003B27AE4BA200977BB2 /* CurrentWeather.swift in Sources */,
 				9BE5003527AE4BA200977BB2 /* Formatter.swift in Sources */,
 				9BE5003E27AE4BA200977BB2 /* LocationManager.swift in Sources */,
+				9B4AA32327AFD30800547AD8 /* FirstView.swift in Sources */,
 				9BE5003927AE4BA200977BB2 /* LocalWeatherViewModel.swift in Sources */,
 				9BE5001527AE4B5500977BB2 /* QuickWeatherApp.swift in Sources */,
 				9BE5003F27AE4BA200977BB2 /* WeatherListViewModel.swift in Sources */,

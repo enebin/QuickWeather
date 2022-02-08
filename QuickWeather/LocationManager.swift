@@ -13,6 +13,9 @@ import Combine
 
 class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
+    static let shared = LocationManager()
+    
+    @Published var locationName: String?
     @Published var longitude: Double?
     @Published var latitude: Double?
     @Published var locationStatus: CLAuthorizationStatus?
@@ -27,9 +30,20 @@ class LocationManager: NSObject, ObservableObject {
         }
     }
     
-    func refreshLocation() {
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+    func requestLocation() {
+        locationManager.requestLocation()
+    }
+    
+    func getLocationName(_ location: CLLocation, completion: @escaping (String?) -> Void) {
+        var name: String?
+        CLGeocoder().reverseGeocodeLocation(location, preferredLocale: Locale(identifier: "en_US")) { placemark, error in
+            guard let placemark = placemark, error == nil else {
+                print(error!)
+                return
+            }
+            name = placemark.first?.administrativeArea
+            completion(name)
+        }
     }
     
     var statusString: String {
@@ -57,9 +71,19 @@ extension LocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        DispatchQueue.main.async {
-            self.longitude = location.coordinate.longitude
-            self.latitude = location.coordinate.latitude
+        DispatchQueue.global(qos: .utility).async {
+                self.getLocationName(location) { result in
+                    guard let result = result else {
+                        print("Error while loading location")
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.locationName = result
+                    }
+                }
         }
+        
+        self.longitude = location.coordinate.longitude
+        self.latitude = location.coordinate.latitude
     }
 }

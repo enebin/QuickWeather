@@ -9,12 +9,13 @@ import SwiftUI
 import Combine
 
 class LocalWeatherViewModel: ObservableObject {
-    @Published var weather: LocalWeather?
+    @Published var weather: CurrentWeather?
+    @Published var name: String?
     private var subscriptions = Set<AnyCancellable>()
     
-    init(lon: Double, lat: Double) {
-        WeatherDataManager.localWeatherPublisher(lon: lon, lat: lat)
-            .map(LocalWeather.init)
+    init(name: String) {
+        WeatherDataManager.currentWeatherPublisher(name: name)
+            .map(CurrentWeather.init)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { response in
                 switch response {
@@ -28,5 +29,6 @@ class LocalWeatherViewModel: ObservableObject {
                 self.weather = value
             })
             .store(in: &self.subscriptions)
+        
     }
 }

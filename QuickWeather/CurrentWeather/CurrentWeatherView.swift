@@ -9,7 +9,10 @@ import SwiftUI
 
 struct CurrentWeatherView: View {
     @ObservedObject var viewModel: CurrentWeather
-    @StateObject var locationManager = LocationManager()
+    
+    init(viewModel: CurrentWeather) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         ZStack {
@@ -159,20 +162,20 @@ extension CurrentWeatherView {
     }
     
     var NavigateButton: some View {
-        Group {
-            if let lon = locationManager.longitude, let lat = locationManager.latitude {
-                NavigationLink(destination: LocalWeatherView(viewModel: LocalWeatherViewModel(lon: lon, lat: lat))) {
-                    Text("more...")
-                        .font(.system(size: 20))
-                        .frame(width: 140, height: 50, alignment: .center)
-                        .foregroundColor(.white)
-                        .background(RoundedRectangle(cornerRadius: 10)
-                                        .fill(.gray.opacity(0.1)))
-                }
-            } else {
+//        Group {
+//            if let lon = locationManager.longitude, let lat = locationManager.latitude {
+//                NavigationLink(destination: Text("temp")) {
+//                    Text("more...")
+//                        .font(.system(size: 20))
+//                        .frame(width: 140, height: 50, alignment: .center)
+//                        .foregroundColor(.white)
+//                        .background(RoundedRectangle(cornerRadius: 10)
+//                                        .fill(.gray.opacity(0.1)))
+//                }
+//            } else {
                 ProgressView()
-            }
-        }
+//            }
+//        }
     }
     
     
