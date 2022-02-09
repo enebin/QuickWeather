@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LocalWeatherView: View {
     @ObservedObject var viewModel: LocalWeatherViewModel
+    @EnvironmentObject var locationManager: LocationManager
     
     init(viewModel: LocalWeatherViewModel) {
         self.viewModel = viewModel
@@ -19,41 +20,26 @@ struct LocalWeatherView: View {
             // Background color. LinearGradient in this case
             Background
                 .ignoresSafeArea()
-            
+   
             if let weather = viewModel.weather {
                 VStack {
-                    ZStack {
-                        MapView()
-                        VStack {
-                            Header
-                            
-                            Spacer()
-                            // Weather description with icon ahead
-                            WeatherWithIcon
-                            
-                            // Main Temp
-                            Text("\(weather.temperature)º")
-                                .font(.system(size: 100))
-                                .foregroundColor(.white)
-                            
-                            // Min/Max Temp
-                            MinAndMaxTemp
-                            
-                            Spacer()
-                        }
+                    VStack {
+                        Header
+                        // Weather description with icon ahead
+                        WeatherWithIcon
+                        
+                        Spacer()
+                        
+                        MapView(viewModel.coord)
+                            .frame(width: 300, height: 300, alignment: .center)
+                        
+                        // Main Temp
+                        Text("\(weather.temperature)º")
+                            .font(.system(size: 100))
+                            .foregroundColor(.white)
+                        
+                        Spacer()
                     }
-                    Divider()
-                    
-                    // Temp feels like
-                    TempFeelsLike
-                        .padding(.vertical)
-                        .padding(.top, 35)
-                        .padding(.horizontal)
-                    
-                    // For more informations(ATM, wind speed, Humidity)
-                    MoreInformations
-                        .padding(.horizontal)
-                        .padding(.bottom, 35)
                 }
                 .padding(.horizontal)
             } else {
@@ -97,11 +83,11 @@ extension LocalWeatherView {
     
     var Header: some View {
         VStack {
-            if let viewModel = viewModel.weather {
+            if let name = locationManager.locationName {
                 Text("It seems you're at...")
                     .font(.subheadline)
                     .foregroundColor(.white)
-                Text("\(viewModel.name)")
+                Text("\(name)")
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
@@ -120,25 +106,26 @@ extension LocalWeatherView {
         .font(.system(size: 25))
     }
     
-    var MinAndMaxTemp: some View {
-        HStack(spacing: 15) {
-            if let viewModel = viewModel.weather {
-                VStack {
-                    Text("min")
-                        .foregroundColor(.white)
-                    Text("\(viewModel.minTemperature)º")
-                        .foregroundColor(.blue)
-                }
-                VStack {
-                    Text("max")
-                        .foregroundColor(.white)
-                    Text("\(viewModel.maxTemperature)º")
-                        .foregroundColor(.red)
-                }
-            }
-        }
-        .font(.system(size: 25))
-    }
+    /// Only available in CurrentWeather model
+//    var MinAndMaxTemp: some View {
+//        HStack(spacing: 15) {
+//            if let viewModel = viewModel.weather {
+//                VStack {
+//                    Text("min")
+//                        .foregroundColor(.white)
+//                    Text("\(viewModel.minTemperature)º")
+//                        .foregroundColor(.blue)
+//                }
+//                VStack {
+//                    Text("max")
+//                        .foregroundColor(.white)
+//                    Text("\(viewModel.maxTemperature)º")
+//                        .foregroundColor(.red)
+//                }
+//            }
+//        }
+//        .font(.system(size: 25))
+//    }
     
     var TempFeelsLike: some View {
         HStack{

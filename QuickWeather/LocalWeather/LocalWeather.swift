@@ -10,8 +10,18 @@ import SwiftUI
 import MapKit
 import Combine
 
-struct LocalWeatherResponse: Decodable {
+struct LocalWeatherResponse: Codable {
     let current: Current
+    let lat: Double
+    let lon: Double
+    let timezoneOffset: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case lat
+        case lon
+        case current
+        case timezoneOffset = "timezone_offset"
+    }
     
     struct Current: Codable {
         let temperature: Double

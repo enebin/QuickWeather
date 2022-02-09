@@ -12,9 +12,26 @@ struct FirstView: View {
     @EnvironmentObject var locationManager: LocationManager
     
     var body: some View {
-        if let name = locationManager.locationName {
-            LocalWeatherView(viewModel: LocalWeatherViewModel(name: name))
+        NavigationView {
+            if let coord = locationManager.coord {
+                LocalWeatherView(viewModel: LocalWeatherViewModel(coord: coord))
+                    .environmentObject(locationManager)
+                    .toolbar(content: {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(action: {locationManager.setCurrentLocation()}) {
+                                Image(systemName: "scope")
+                            }
+                        }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {locationManager.setRandomLocation()}) {
+                                Image(systemName: "arrow.clockwise")
+                            }
+                        }
+                    })
+                    .accentColor(.white)
+            }
         }
+        
         
 //        TabView {
 //            WeatherListView()

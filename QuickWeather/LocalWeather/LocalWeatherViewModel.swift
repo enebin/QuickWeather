@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import MapKit
 import Combine
 
 class LocalWeatherViewModel: ObservableObject {
-    @Published var weather: CurrentWeather?
-    @Published var name: String?
+    @Published var weather: LocalWeather?
+    @Published var coord = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     private var subscriptions = Set<AnyCancellable>()
     
-    init(name: String) {
-        WeatherDataManager.currentWeatherPublisher(name: name)
-            .map(CurrentWeather.init)
+    private func updateWeather(coord: CLLocationCoordinate2D) {
+        WeatherDataManager.localWeatherPublisher(lon: coord.longitude, lat: coord.latitude)
+            .map(LocalWeather.init)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { response in
                 switch response {
@@ -29,6 +30,14 @@ class LocalWeatherViewModel: ObservableObject {
                 self.weather = value
             })
             .store(in: &self.subscriptions)
-        
+    }
+    
+    init(coord: CLLocationCoordinate2D) {
+        self.updateWeather(coord: coord)
+        self.$coord.sink(receiveValue: { _ in
+            self.updateWeather(coord: coord)
+        })
+            .store(in: &subscriptions)
+        self.coord = coord
     }
 }

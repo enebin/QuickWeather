@@ -119,9 +119,9 @@
 			isa = PBXGroup;
 			children = (
 				9BE5002727AE4BA200977BB2 /* LocalWeather.swift */,
+				9BDD90C127B2A9B10072D47F /* MapView.swift */,
 				9BE5002827AE4BA200977BB2 /* LocalWeatherView.swift */,
 				9BE5002927AE4BA200977BB2 /* LocalWeatherViewModel.swift */,
-				9BDD90C127B2A9B10072D47F /* MapView.swift */,
 			);
 			path = LocalWeather;
 			sourceTree = "<group>";

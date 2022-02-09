@@ -13,11 +13,9 @@ import Combine
 
 class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
-    static let shared = LocationManager()
     
     @Published var locationName: String?
-    @Published var longitude: Double?
-    @Published var latitude: Double?
+    @Published var coord: CLLocationCoordinate2D?
     @Published var locationStatus: CLAuthorizationStatus?
 
     override init() {
@@ -26,23 +24,41 @@ class LocationManager: NSObject, ObservableObject {
             self.locationManager.delegate = self
             self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
             self.locationManager.requestWhenInUseAuthorization()
-            self.locationManager.startUpdatingLocation()
+            self.locationManager.requestLocation()
+
+//            self.locationManager.startUpdatingLocation()
         }
     }
     
-    func requestLocation() {
+    func setCurrentLocation() {
         locationManager.requestLocation()
     }
     
-    func getLocationName(_ location: CLLocation, completion: @escaping (String?) -> Void) {
+    func setRandomLocation() {
+        let randLat = Int.random(in: -90...90)
+        let randLon = Int.random(in: -180...180)
+        
+        let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(randLat),
+                                            longitude: CLLocationDegrees(randLon))
+        
+        self.coord = coord
+        getLocationName(CLLocation(latitude: coord.latitude, longitude: coord.longitude)) { name in
+            DispatchQueue.main.async {
+                self.locationName = name
+            }
+        }
+    }
+    
+    func getLocationName(_ location: CLLocation, completion: @escaping (String) -> Void) {
         var name: String?
         CLGeocoder().reverseGeocodeLocation(location, preferredLocale: Locale(identifier: "en_US")) { placemark, error in
             guard let placemark = placemark, error == nil else {
-                print(error!)
+                print("Error occured: \(error!)")
                 return
             }
             name = placemark.first?.administrativeArea
-            completion(name)
+            let parsedName = name ?? "No man's land"
+            completion(parsedName)
         }
     }
     
@@ -63,6 +79,10 @@ class LocationManager: NSObject, ObservableObject {
 }
 
 extension LocationManager: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         DispatchQueue.main.async {
             self.locationStatus = status
@@ -72,18 +92,13 @@ extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         DispatchQueue.global(qos: .utility).async {
-                self.getLocationName(location) { result in
-                    guard let result = result else {
-                        print("Error while loading location")
-                        return
-                    }
+                self.getLocationName(location) { name in
                     DispatchQueue.main.async {
-                        self.locationName = result
+                        self.locationName = name
                     }
                 }
         }
         
-        self.longitude = location.coordinate.longitude
-        self.latitude = location.coordinate.latitude
+        self.coord = location.coordinate
     }
 }
