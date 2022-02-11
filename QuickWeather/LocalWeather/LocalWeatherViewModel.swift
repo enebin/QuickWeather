@@ -15,6 +15,8 @@ class LocalWeatherViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     
     private func updateWeather(coord: CLLocationCoordinate2D) {
+        print("updateWeather called")
+
         WeatherDataManager.localWeatherPublisher(lon: coord.longitude, lat: coord.latitude)
             .map(LocalWeather.init)
             .receive(on: DispatchQueue.main)
@@ -33,11 +35,15 @@ class LocalWeatherViewModel: ObservableObject {
     }
     
     init(coord: CLLocationCoordinate2D) {
+        print("init")
         self.updateWeather(coord: coord)
-        self.$coord.sink(receiveValue: { _ in
-            self.updateWeather(coord: coord)
-        })
-            .store(in: &subscriptions)
+//        self.$coord.sink(receiveValue: { _ in
+//            print("updateWeather called in Sink")
+//
+//            self.updateWeather(coord: coord)
+//        })
+//            .store(in: &subscriptions)
+        
         self.coord = coord
     }
 }

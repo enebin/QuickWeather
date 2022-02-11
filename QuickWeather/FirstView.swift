@@ -9,36 +9,52 @@ import SwiftUI
 import Combine
 
 struct FirstView: View {
-    @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var locationDataManager: LocationDataManager
+    @StateObject var timeManager = TimeManager()
     
     var body: some View {
         NavigationView {
-            if let coord = locationManager.coord {
+            if let coord = locationDataManager.coord {
                 LocalWeatherView(viewModel: LocalWeatherViewModel(coord: coord))
-                    .environmentObject(locationManager)
+                    .environmentObject(locationDataManager)
+                    .navigationTitle("")
+                    .navigationBarTitleDisplayMode(.inline)
                     .toolbar(content: {
                         ToolbarItem(placement: .navigationBarLeading) {
-                            Button(action: {locationManager.setCurrentLocation()}) {
+                            Button(action: {
+                                locationDataManager.setCurrentLocation()
+                            }) {
                                 Image(systemName: "scope")
                             }
                         }
                         ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(action: {locationManager.setRandomLocation()}) {
+                            Button(action: {
+                                locationDataManager.setRandomLocation()
+                                timeManager.waitUntilNextChance()
+                            }) {
                                 Image(systemName: "arrow.clockwise")
                             }
+                            .disabled(!timeManager.isActive)
                         }
                     })
                     .accentColor(.white)
+            } else {
+                // TODO: Change here
+                ProgressView()
             }
         }
-        
-        
-//        TabView {
-//            WeatherListView()
-//            if let city = locationManager.locationName {
-//                LocalWeatherView(viewModel: LocalWeatherViewModel(name: city))
-//            }
-//        }
+    }
+}
+
+class TimeManager: ObservableObject {
+    @Published var isActive = true
+    private var subscriptions = Set<AnyCancellable>()
+    
+    func waitUntilNextChance() {
+        isActive = false
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
+            self.isActive = true
+        }
     }
 }
 

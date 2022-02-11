@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9B4AA32327AFD30800547AD8 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4AA32227AFD30800547AD8 /* FirstView.swift */; };
+		9BC482EB27B6390200A8FF43 /* LocationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC482EA27B6390200A8FF43 /* LocationDataManager.swift */; };
 		9BDD90C227B2A9B10072D47F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDD90C127B2A9B10072D47F /* MapView.swift */; };
 		9BE5001527AE4B5500977BB2 /* QuickWeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5001427AE4B5500977BB2 /* QuickWeatherApp.swift */; };
 		9BE5001927AE4B5700977BB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BE5001827AE4B5700977BB2 /* Assets.xcassets */; };
@@ -19,18 +20,13 @@
 		9BE5003827AE4BA200977BB2 /* LocalWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5002827AE4BA200977BB2 /* LocalWeatherView.swift */; };
 		9BE5003927AE4BA200977BB2 /* LocalWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5002927AE4BA200977BB2 /* LocalWeatherViewModel.swift */; };
 		9BE5003A27AE4BA200977BB2 /* APIKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BE5002A27AE4BA200977BB2 /* APIKeys.plist */; };
-		9BE5003B27AE4BA200977BB2 /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5002C27AE4BA200977BB2 /* CurrentWeather.swift */; };
-		9BE5003C27AE4BA200977BB2 /* CurrentWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5002D27AE4BA200977BB2 /* CurrentWeatherView.swift */; };
-		9BE5003D27AE4BA200977BB2 /* CurrentWeatherRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5002E27AE4BA200977BB2 /* CurrentWeatherRowView.swift */; };
 		9BE5003E27AE4BA200977BB2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5002F27AE4BA200977BB2 /* LocationManager.swift */; };
-		9BE5003F27AE4BA200977BB2 /* WeatherListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5003127AE4BA200977BB2 /* WeatherListViewModel.swift */; };
-		9BE5004027AE4BA200977BB2 /* WeatherListVIewModel+Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5003227AE4BA200977BB2 /* WeatherListVIewModel+Enum.swift */; };
-		9BE5004127AE4BA200977BB2 /* WeatherListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5003327AE4BA200977BB2 /* WeatherListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9B4AA32227AFD30800547AD8 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		9B4AA32427AFDDE600547AD8 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9BC482EA27B6390200A8FF43 /* LocationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataManager.swift; sourceTree = "<group>"; };
 		9BDD90C127B2A9B10072D47F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		9BE5001127AE4B5500977BB2 /* QuickWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BE5001427AE4B5500977BB2 /* QuickWeatherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickWeatherApp.swift; sourceTree = "<group>"; };
@@ -43,13 +39,7 @@
 		9BE5002827AE4BA200977BB2 /* LocalWeatherView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalWeatherView.swift; sourceTree = "<group>"; };
 		9BE5002927AE4BA200977BB2 /* LocalWeatherViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalWeatherViewModel.swift; sourceTree = "<group>"; };
 		9BE5002A27AE4BA200977BB2 /* APIKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKeys.plist; sourceTree = "<group>"; };
-		9BE5002C27AE4BA200977BB2 /* CurrentWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
-		9BE5002D27AE4BA200977BB2 /* CurrentWeatherView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentWeatherView.swift; sourceTree = "<group>"; };
-		9BE5002E27AE4BA200977BB2 /* CurrentWeatherRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentWeatherRowView.swift; sourceTree = "<group>"; };
 		9BE5002F27AE4BA200977BB2 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		9BE5003127AE4BA200977BB2 /* WeatherListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherListViewModel.swift; sourceTree = "<group>"; };
-		9BE5003227AE4BA200977BB2 /* WeatherListVIewModel+Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WeatherListVIewModel+Enum.swift"; sourceTree = "<group>"; };
-		9BE5003327AE4BA200977BB2 /* WeatherListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,11 +73,10 @@
 			isa = PBXGroup;
 			children = (
 				9BE5002227AE4BA200977BB2 /* Utils */,
-				9BE5003027AE4BA200977BB2 /* WeatherList */,
-				9BE5002B27AE4BA200977BB2 /* CurrentWeather */,
 				9BE5002627AE4BA200977BB2 /* LocalWeather */,
 				9B4AA32227AFD30800547AD8 /* FirstView.swift */,
 				9BE5002F27AE4BA200977BB2 /* LocationManager.swift */,
+				9BC482EA27B6390200A8FF43 /* LocationDataManager.swift */,
 				9BE5002527AE4BA200977BB2 /* WeatherDataManager.swift */,
 				9BE5001427AE4B5500977BB2 /* QuickWeatherApp.swift */,
 				9BE5002A27AE4BA200977BB2 /* APIKeys.plist */,
@@ -124,26 +113,6 @@
 				9BE5002927AE4BA200977BB2 /* LocalWeatherViewModel.swift */,
 			);
 			path = LocalWeather;
-			sourceTree = "<group>";
-		};
-		9BE5002B27AE4BA200977BB2 /* CurrentWeather */ = {
-			isa = PBXGroup;
-			children = (
-				9BE5002C27AE4BA200977BB2 /* CurrentWeather.swift */,
-				9BE5002D27AE4BA200977BB2 /* CurrentWeatherView.swift */,
-				9BE5002E27AE4BA200977BB2 /* CurrentWeatherRowView.swift */,
-			);
-			path = CurrentWeather;
-			sourceTree = "<group>";
-		};
-		9BE5003027AE4BA200977BB2 /* WeatherList */ = {
-			isa = PBXGroup;
-			children = (
-				9BE5003127AE4BA200977BB2 /* WeatherListViewModel.swift */,
-				9BE5003227AE4BA200977BB2 /* WeatherListVIewModel+Enum.swift */,
-				9BE5003327AE4BA200977BB2 /* WeatherListView.swift */,
-			);
-			path = WeatherList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,21 +186,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BE5004027AE4BA200977BB2 /* WeatherListVIewModel+Enum.swift in Sources */,
 				9BDD90C227B2A9B10072D47F /* MapView.swift in Sources */,
 				9BE5003727AE4BA200977BB2 /* LocalWeather.swift in Sources */,
 				9BE5003827AE4BA200977BB2 /* LocalWeatherView.swift in Sources */,
-				9BE5004127AE4BA200977BB2 /* WeatherListView.swift in Sources */,
-				9BE5003C27AE4BA200977BB2 /* CurrentWeatherView.swift in Sources */,
 				9BE5003427AE4BA200977BB2 /* Extensions.swift in Sources */,
-				9BE5003D27AE4BA200977BB2 /* CurrentWeatherRowView.swift in Sources */,
-				9BE5003B27AE4BA200977BB2 /* CurrentWeather.swift in Sources */,
 				9BE5003527AE4BA200977BB2 /* Formatter.swift in Sources */,
 				9BE5003E27AE4BA200977BB2 /* LocationManager.swift in Sources */,
+				9BC482EB27B6390200A8FF43 /* LocationDataManager.swift in Sources */,
 				9B4AA32327AFD30800547AD8 /* FirstView.swift in Sources */,
 				9BE5003927AE4BA200977BB2 /* LocalWeatherViewModel.swift in Sources */,
 				9BE5001527AE4B5500977BB2 /* QuickWeatherApp.swift in Sources */,
-				9BE5003F27AE4BA200977BB2 /* WeatherListViewModel.swift in Sources */,
 				9BE5003627AE4BA200977BB2 /* WeatherDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

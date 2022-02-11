@@ -25,13 +25,13 @@ struct LocalWeatherView: View {
                 VStack {
                     VStack {
                         Header
+                        
                         // Weather description with icon ahead
                         WeatherWithIcon
-                        
-                        Spacer()
-                        
+                                                
                         MapView(viewModel.coord)
                             .frame(width: 300, height: 300, alignment: .center)
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
                         
                         // Main Temp
                         Text("\(weather.temperature)º")
@@ -39,6 +39,9 @@ struct LocalWeatherView: View {
                             .foregroundColor(.white)
                         
                         Spacer()
+                        
+                        MoreButton
+                            .padding()
                     }
                 }
                 .padding(.horizontal)
@@ -83,14 +86,20 @@ extension LocalWeatherView {
     
     var Header: some View {
         VStack {
-            if let name = locationManager.locationName {
+            if let city = locationManager.cityName, let country = locationManager.countryName {
                 Text("It seems you're at...")
                     .font(.subheadline)
                     .foregroundColor(.white)
-                Text("\(name)")
+            
+                Text("\(country)")
+                    .font(.subheadline)
+                    .foregroundColor(.white)
+
+                Text("\(city)")
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
+                
             }
         }
     }
@@ -172,6 +181,12 @@ extension LocalWeatherView {
         }
         .foregroundColor(.white)
         .font(.system(size: 25))
+    }
+    
+    var MoreButton: some View {
+        NavigationLink(destination: Text("detail")) {
+            Text("more")
+        }
     }
     
     @ViewBuilder

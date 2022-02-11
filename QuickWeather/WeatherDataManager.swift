@@ -29,38 +29,6 @@ class WeatherDataManager {
         }
     }
     
-    // MARK: Downloading current weather of the city from api server
-    static func currentWeatherPublisher(name: String) -> AnyPublisher<CurrentWeatherResponse, Error> {
-        // Get path of APIKeys.plist
-        guard let path = Bundle.main.path(forResource: "APIKeys", ofType: "plist") else {
-            return Fail(error: WeatherError.fetching as Error).eraseToAnyPublisher()
-        }
-        
-        // Fetch my api key from APIKeys.plist
-        var weatherAPIKey: String?
-        do {
-            let keyDictUrl = URL(fileURLWithPath: path)
-            let data = try Data(contentsOf: keyDictUrl)
-            let keyDict = try PropertyListDecoder().decode([String: String].self, from: data)
-            weatherAPIKey = keyDict["OpenWeatherAPIKey"]
-        } catch  {
-            return Fail(error: error).eraseToAnyPublisher()
-        }
-         
-        // Make URLSession.datapublisher which requests informations from the server
-        let session = URLSession.shared
-        let decoder = JSONDecoder()
-        let parsedName = String(name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(parsedName)&appid=\(weatherAPIKey!)")
-        guard let url = url else {
-            return Fail(error: WeatherError.fetching as Error).eraseToAnyPublisher()
-        }
-        return session.dataTaskPublisher(for: url)
-            .map(\.data)
-            .decode(type: CurrentWeatherResponse.self, decoder: decoder)
-            .eraseToAnyPublisher()
-    }
-    
     // MARK: Downloading current weather of current location from api server
     static func localWeatherPublisher(lon: Double, lat: Double) -> AnyPublisher<LocalWeatherResponse, Error> {
         // Get path of APIKeys.plist
@@ -83,8 +51,7 @@ class WeatherDataManager {
         let session = URLSession.shared
         let decoder = JSONDecoder()
         let url = URL(string:
-                        "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&appid=\(weatherAPIKey!)")
-        
+                        "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&appid=\(weatherAPIKey!)")        
         return session.dataTaskPublisher(for: url!)
             .map(\.data)
             .decode(type: LocalWeatherResponse.self, decoder: decoder)

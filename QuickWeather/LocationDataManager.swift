@@ -11,9 +11,11 @@ import Combine
 
 // TODO: Auth handling
 
-class LocationManager: NSObject, ObservableObject {
+class LocationDataManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
+    private var subscriptions = Set<AnyCancellable>()
     
+    @Published var weather: LocalWeather?
     @Published var countryName: String?
     @Published var cityName: String?
     @Published var coord: CLLocationCoordinate2D?
@@ -41,18 +43,34 @@ class LocationManager: NSObject, ObservableObject {
                                             longitude: CLLocationDegrees(randLon))
         
         self.coord = coord
-        getLocationName(CLLocation(latitude: coord.latitude, longitude: coord.longitude)) { city, country in
-            DispatchQueue.main.async {
-                self.cityName = city
-                self.countryName = country
-            }
-        }
+        let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
+        getLocationName(location)
+        getLocalWeather(location)
     }
     
-    private func getLocationName(_ location: CLLocation, completion: @escaping (String, String) -> Void) {
+    private func getLocalWeather(_ location: CLLocation) {
+        WeatherDataManager.localWeatherPublisher(lon: location.coordinate.longitude,
+                                                 lat: location.coordinate.latitude)
+            .map(LocalWeather.init)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { response in
+                switch response {
+                case .failure(let error):
+                    print("Failed with error: \(error)")
+                    return
+                case .finished:
+                    print("Succeesfully finished!")
+                }
+            }, receiveValue: { value in
+                self.weather = value
+            })
+            .store(in: &self.subscriptions)
+        
+    }
+    
+    private func getLocationName(_ location: CLLocation) {
         var city: String?
         var country: String?
-        var continent: String?
         
         CLGeocoder().reverseGeocodeLocation(location, preferredLocale: Locale(identifier: "en_US")) { placemark, error in
             guard let placemark = placemark, error == nil else {
@@ -64,7 +82,8 @@ class LocationManager: NSObject, ObservableObject {
             let parsedCountry = country ?? "maybe..."
             let parsedCity = city ?? "No man's land"
             
-            completion(parsedCity, parsedCountry)
+            self.cityName = parsedCity
+            self.countryName = parsedCountry
         }
     }
     
@@ -84,7 +103,7 @@ class LocationManager: NSObject, ObservableObject {
     }
 }
 
-extension LocationManager: CLLocationManagerDelegate {
+extension LocationDataManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
@@ -98,12 +117,8 @@ extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         DispatchQueue.global(qos: .utility).async {
-                self.getLocationName(location) { city, country in
-                    DispatchQueue.main.async {
-                        self.cityName = city
-                        self.countryName = country
-                    }
-                }
+            self.getLocationName(location)
+            self.getLocalWeather(location)
         }
         self.coord = location.coordinate
     }
