@@ -14,34 +14,29 @@ struct FirstView: View {
     
     var body: some View {
         NavigationView {
-            if let coord = locationDataManager.coord {
-                LocalWeatherView(viewModel: LocalWeatherViewModel(coord: coord))
-                    .environmentObject(locationDataManager)
-                    .navigationTitle("")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar(content: {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button(action: {
-                                locationDataManager.setCurrentLocation()
-                            }) {
-                                Image(systemName: "scope")
-                            }
+            LocalWeatherView()
+                .environmentObject(locationDataManager)
+                .navigationTitle("")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar(content: {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            locationDataManager.setCurrentLocation()
+                        }) {
+                            Image(systemName: "scope")
                         }
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(action: {
-                                locationDataManager.setRandomLocation()
-                                timeManager.waitUntilNextChance()
-                            }) {
-                                Image(systemName: "arrow.clockwise")
-                            }
-                            .disabled(!timeManager.isActive)
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            locationDataManager.setRandomLocation()
+                            timeManager.waitUntilNextChance()
+                        }) {
+                            Image(systemName: "arrow.clockwise")
                         }
-                    })
-                    .accentColor(.white)
-            } else {
-                // TODO: Change here
-                ProgressView()
-            }
+                        .disabled(!timeManager.isActive)
+                    }
+                })
+                .accentColor(.white)
         }
     }
 }

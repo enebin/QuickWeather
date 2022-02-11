@@ -8,20 +8,15 @@
 import SwiftUI
 
 struct LocalWeatherView: View {
-    @ObservedObject var viewModel: LocalWeatherViewModel
-    @EnvironmentObject var locationManager: LocationManager
-    
-    init(viewModel: LocalWeatherViewModel) {
-        self.viewModel = viewModel
-    }
-    
+    @EnvironmentObject var viewModel: LocationDataManager
+
     var body: some View {
         ZStack {
             // Background color. LinearGradient in this case
             Background
                 .ignoresSafeArea()
    
-            if let weather = viewModel.weather {
+            if let weather = viewModel.weather, let coord = viewModel.coord {
                 VStack {
                     VStack {
                         Header
@@ -29,7 +24,7 @@ struct LocalWeatherView: View {
                         // Weather description with icon ahead
                         WeatherWithIcon
                                                 
-                        MapView(viewModel.coord)
+                        MapView(coord)
                             .frame(width: 300, height: 300, alignment: .center)
                             .clipShape(RoundedRectangle(cornerRadius: 15))
                         
@@ -86,7 +81,7 @@ extension LocalWeatherView {
     
     var Header: some View {
         VStack {
-            if let city = locationManager.cityName, let country = locationManager.countryName {
+            if let city = viewModel.cityName, let country = viewModel.countryName {
                 Text("It seems you're at...")
                     .font(.subheadline)
                     .foregroundColor(.white)
