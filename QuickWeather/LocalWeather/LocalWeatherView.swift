@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct LocalWeatherView: View {
     @EnvironmentObject var viewModel: LocationDataManager
@@ -24,7 +25,7 @@ struct LocalWeatherView: View {
                         // Weather description with icon ahead
                         WeatherWithIcon
                                                 
-                        MapView(coord)
+                        MapView(location: coord)
                             .frame(width: 300, height: 300, alignment: .center)
                             .clipShape(RoundedRectangle(cornerRadius: 15))
                         

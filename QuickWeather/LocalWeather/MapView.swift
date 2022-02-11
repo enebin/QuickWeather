@@ -8,24 +8,33 @@
 import SwiftUI
 import MapKit
 
+class MapViewModel: ObservableObject {
+    @Published var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 37.5666791, longitude: 126.9782914),
+        span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+}
+
 struct MapView: View {
-    @State private var region: MKCoordinateRegion
+    @ObservedObject var viewModel: MapViewModel
 
     var body: some View {
-        Map(coordinateRegion: $region, interactionModes: [.zoom])
+        Map(coordinateRegion: $viewModel.region, interactionModes: [.zoom])
     }
-    
-    init(_ coord: CLLocationCoordinate2D) {
-        self.region = MKCoordinateRegion(
-            center: coord,
+
+    init(location: CLLocationCoordinate2D) {
+        let region = MKCoordinateRegion(
+            center: location,
             span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
         )
-        print(region)
+        
+        viewModel = MapViewModel()
+        viewModel.region = region
+        print("Region: \(viewModel.region)")
     }
 }
 
-struct MapView_Previews: PreviewProvider {
-    static var previews: some View {
-        MapView(CLLocationCoordinate2D(latitude: 37.5666791, longitude: 126.9782914))
-    }
-}
+//struct MapView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MapView(CLLocationCoordinate2D(latitude: 37.5666791, longitude: 126.9782914))
+//    }
+//}

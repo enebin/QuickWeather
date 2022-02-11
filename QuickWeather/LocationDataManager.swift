@@ -43,6 +43,7 @@ class LocationDataManager: NSObject, ObservableObject {
                                             longitude: CLLocationDegrees(randLon))
         
         self.coord = coord
+        print("HRHRHR \(self.coord)")
         let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
         getLocationName(location)
         getLocalWeather(location)
