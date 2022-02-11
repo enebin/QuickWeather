@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MapKit
 
 struct LocalWeatherView: View {
     @EnvironmentObject var viewModel: LocationDataManager
@@ -102,8 +101,7 @@ extension LocalWeatherView {
     
     var WeatherWithIcon: some View {
         HStack {
-            if let viewModel = viewModel.weather, let icon = viewModel.icon {
-                icon
+            if let viewModel = viewModel.weather {
                 Text("\(viewModel.weather)")
             }
         }
