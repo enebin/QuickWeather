@@ -26,3 +26,14 @@ extension View {
         return self
     }
 }
+
+extension Font {
+    struct Arial {
+        let subtitle = Font.custom("Arial-BoldMT", size: 12)
+        let cityname = Font.custom("ArialCEMTBlack-Regular", size: 25)
+        let cardtitle = Font.custom("Arial-BoldMT", size: 15)
+        let description = Font.custom("Arial-BoldMT", size: 20)
+    }
+    
+    static let arial = Arial()
+}

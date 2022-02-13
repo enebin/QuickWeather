@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		9B4AA32327AFD30800547AD8 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4AA32227AFD30800547AD8 /* FirstView.swift */; };
+		9B66C89127B8E61C00671751 /* arial.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C88E27B8E61C00671751 /* arial.TTF */; };
+		9B66C89227B8E61C00671751 /* arial_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C88F27B8E61C00671751 /* arial_black.ttf */; };
+		9B66C89327B8E61C00671751 /* arial_bold.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C89027B8E61C00671751 /* arial_bold.TTF */; };
+		9B66C89527B8E8B600671751 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B66C89427B8E8B600671751 /* LocationView.swift */; };
 		9BC482EB27B6390200A8FF43 /* LocationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC482EA27B6390200A8FF43 /* LocationDataManager.swift */; };
 		9BDD90C227B2A9B10072D47F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDD90C127B2A9B10072D47F /* MapView.swift */; };
 		9BE5001527AE4B5500977BB2 /* QuickWeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5001427AE4B5500977BB2 /* QuickWeatherApp.swift */; };
@@ -26,6 +30,11 @@
 /* Begin PBXFileReference section */
 		9B4AA32227AFD30800547AD8 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		9B4AA32427AFDDE600547AD8 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9B66C88D27B8E5FF00671751 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9B66C88E27B8E61C00671751 /* arial.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial.TTF; sourceTree = "<group>"; };
+		9B66C88F27B8E61C00671751 /* arial_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial_black.ttf; sourceTree = "<group>"; };
+		9B66C89027B8E61C00671751 /* arial_bold.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial_bold.TTF; sourceTree = "<group>"; };
+		9B66C89427B8E8B600671751 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		9BC482EA27B6390200A8FF43 /* LocationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataManager.swift; sourceTree = "<group>"; };
 		9BDD90C127B2A9B10072D47F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		9BE5001127AE4B5500977BB2 /* QuickWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +62,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B66C88C27B8E5D900671751 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9B66C88F27B8E61C00671751 /* arial_black.ttf */,
+				9B66C89027B8E61C00671751 /* arial_bold.TTF */,
+				9B66C88E27B8E61C00671751 /* arial.TTF */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		9BE5000827AE4B5500977BB2 = {
 			isa = PBXGroup;
 			children = (
@@ -72,6 +91,8 @@
 		9BE5001327AE4B5500977BB2 /* QuickWeather */ = {
 			isa = PBXGroup;
 			children = (
+				9B66C88D27B8E5FF00671751 /* Info.plist */,
+				9B66C88C27B8E5D900671751 /* Fonts */,
 				9BE5002227AE4BA200977BB2 /* Utils */,
 				9BE5002627AE4BA200977BB2 /* LocalWeather */,
 				9B4AA32227AFD30800547AD8 /* FirstView.swift */,
@@ -111,6 +132,7 @@
 				9BDD90C127B2A9B10072D47F /* MapView.swift */,
 				9BE5002827AE4BA200977BB2 /* LocalWeatherView.swift */,
 				9BE5002927AE4BA200977BB2 /* LocalWeatherViewModel.swift */,
+				9B66C89427B8E8B600671751 /* LocationView.swift */,
 			);
 			path = LocalWeather;
 			sourceTree = "<group>";
@@ -174,7 +196,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BE5003A27AE4BA200977BB2 /* APIKeys.plist in Resources */,
+				9B66C89327B8E61C00671751 /* arial_bold.TTF in Resources */,
 				9BE5001C27AE4B5700977BB2 /* Preview Assets.xcassets in Resources */,
+				9B66C89127B8E61C00671751 /* arial.TTF in Resources */,
+				9B66C89227B8E61C00671751 /* arial_black.ttf in Resources */,
 				9BE5001927AE4B5700977BB2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,6 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BDD90C227B2A9B10072D47F /* MapView.swift in Sources */,
+				9B66C89527B8E8B600671751 /* LocationView.swift in Sources */,
 				9BE5003727AE4BA200977BB2 /* LocalWeather.swift in Sources */,
 				9BE5003827AE4BA200977BB2 /* LocalWeatherView.swift in Sources */,
 				9BE5003427AE4BA200977BB2 /* Extensions.swift in Sources */,
@@ -330,6 +356,7 @@
 				DEVELOPMENT_TEAM = W6QHM4Y43Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuickWeather/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We use your current location data to know where you are and provide weather based on the location.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your current location data to know where you are and provide weather based on the location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -362,6 +389,7 @@
 				DEVELOPMENT_TEAM = W6QHM4Y43Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = QuickWeather/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We use your current location data to know where you are and provide weather based on the location.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your current location data to know where you are and provide weather based on the location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
