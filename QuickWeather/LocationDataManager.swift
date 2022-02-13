@@ -19,6 +19,7 @@ class LocationDataManager: NSObject, ObservableObject {
     @Published var countryName: String?
     @Published var cityName: String?
     @Published var coord: CLLocationCoordinate2D?
+    @Published var time: String?
     @Published var locationStatus: CLAuthorizationStatus?
 
     override init() {
@@ -32,10 +33,20 @@ class LocationDataManager: NSObject, ObservableObject {
     }
     
     func setCurrentLocation() {
+        self.weather = nil
+        self.countryName = nil
+        self.cityName = nil
+        self.time = nil
+        
         locationManager.requestLocation()
     }
     
     func setRandomLocation() {
+        self.weather = nil
+        self.countryName = nil
+        self.cityName = nil
+        self.time = nil
+        
         let randLat = Int.random(in: -90...90)
         let randLon = Int.random(in: -180...180)
         
@@ -44,7 +55,7 @@ class LocationDataManager: NSObject, ObservableObject {
         
         self.coord = coord
         let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
-        getLocationName(location)
+        getLocationNameAndTime(location)
         getLocalWeather(location)
     }
     
@@ -64,13 +75,13 @@ class LocationDataManager: NSObject, ObservableObject {
             }, receiveValue: { value in
                 self.weather = value
             })
-            .store(in: &self.subscriptions)
-        
+            .store(in: &self.subscriptions)   
     }
     
-    private func getLocationName(_ location: CLLocation) {
+    private func getLocationNameAndTime(_ location: CLLocation) {
         var city: String?
         var country: String?
+        var time: TimeZone?
         
         CLGeocoder().reverseGeocodeLocation(location, preferredLocale: Locale(identifier: "en_US")) { placemark, error in
             guard let placemark = placemark, error == nil else {
@@ -79,13 +90,33 @@ class LocationDataManager: NSObject, ObservableObject {
             }
             country = placemark.first?.country
             city = placemark.first?.administrativeArea
-            let parsedCountry = country ?? "maybe..."
+            time = placemark.first?.timeZone
+                        
+            let parsedCountry = country ?? "Somewhere..."
             let parsedCity = city ?? "No man's land"
+            let parsedTime = self.timeCalcultor(tz: time)
             
             self.cityName = parsedCity
             self.countryName = parsedCountry
+            self.time = parsedTime
         }
     }
+    
+    private func timeCalcultor(tz: TimeZone?) -> String {
+        let date = DateFormatter()
+        
+        if let tz = tz {
+            date.timeZone = tz
+            date.amSymbol = "AM"
+            date.pmSymbol = "PM"
+            date.dateFormat = "a h:mm"
+            
+            return date.string(from: Date())
+        } else {
+            return "Hmm.. where are you?"
+        }
+    }
+    
     
     var statusString: String {
         guard let status = locationStatus else {
@@ -117,7 +148,7 @@ extension LocationDataManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         DispatchQueue.global(qos: .utility).async {
-            self.getLocationName(location)
+            self.getLocationNameAndTime(location)
             self.getLocalWeather(location)
         }
         self.coord = location.coordinate

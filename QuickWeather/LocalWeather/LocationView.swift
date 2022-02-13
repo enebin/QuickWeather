@@ -8,50 +8,68 @@
 import SwiftUI
 
 struct LocationView: View {
+    @EnvironmentObject var viewModel: LocationDataManager
+    @StateObject var timeManager = TimeManager()
+
+    @State var isLoading = true
+
     var body: some View {
         ZStack {
-            Color(red: 248/255, green: 248/255, blue: 248/255)
+            background
                 .ignoresSafeArea()
             VStack(alignment: .leading, spacing: 0) {
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(.gray)
-                    .frame(height: 142)
-                    .padding(.bottom, 18)
-                
-                Text("It seems you're at")
-                    .font(.arial.subtitle)
-                    .foregroundColor(.gray)
-                
-                HStack {
-                    Text("HongKong")
-                        .font(.arial.cityname)
-                    .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
-                    Spacer()
+                if let weather = viewModel.weather,
+                   let coord = viewModel.coord,
+                   let cityName = viewModel.cityName,
+                   let countryName = viewModel.countryName,
+                   let time = viewModel.time
+                {
+                    MapView(location: coord)
+                        .frame(height: 142)
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: 15)
+                        )
+                        .padding(.bottom, 18)
                     
-                    Image(systemName: "arrow.clockwise")
-                    Image(systemName: "square.and.arrow.up")
-                }
-                .padding(.bottom, 48)
-                
-                Text("Details about them")
-                    .font(.arial.subtitle)
-                    .foregroundColor(.gray)
-                    .padding(.bottom, 18)
-                
-                VStack(spacing: 20) {
-                    HStack(spacing: 16) {
-                        CardView(category: "Weather", note: "23ºC", subtitle: "Cloudy")
+                    Text("It seems you're at")
+                        .font(.arial.subtitle)
+                        .foregroundColor(.gray)
+                    
+                    HStack {
+                        Text("\(cityName)")
+                            .font(.arial.cityname)
+                            .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
+                        
+                        functionalButtons
+                    }
+                    .padding(.bottom, 48)
+                    
+                    Text("Details about them")
+                        .font(.arial.subtitle)
+                        .foregroundColor(.gray)
+                        .padding(.bottom, 18)
+                    
+                    VStack(spacing: 20) {
+                        HStack(spacing: 16) {
+                            CardView(category: "Weather", note: "\(weather.temperature)ºC", subtitle: "\(weather.weather)")
+                                .frame(height: 110)
+                            CardView(category: "Time", note: "\(time)", subtitle: nil)
+                                .frame(height: 110)
+                        }
+                        CardView(category: "Location", note: "\(countryName)", subtitle: "\(coord.latitude)º, \(coord.longitude)º")
                             .frame(height: 110)
-                        CardView(category: "Time", note: "PM 1:23", subtitle: nil)
+                        CardView(category: "Guest book", note: "\"Veni vidi vici\"", subtitle: "21.02.21 22: 34 by Caesar")
                             .frame(height: 110)
                     }
-                    CardView(category: "Location", note: "Asia", subtitle: "32.1723º, 127.292º")
-                        .frame(height: 110)
-                    CardView(category: "Guest book", note: "\"Veni vidi vici\"", subtitle: "21.02.21 22: 34 by Caesar")
-                        .frame(height: 110)
+                } else {
+                    defaultView
+                        .opacity(isLoading ? 1 : 0.5)
+                        .onAppear {
+                            withAnimation(self.repeatingAnimation) {
+                                self.isLoading.toggle()
+                            }
+                        }
                 }
-                
-                
             }
             .padding(.horizontal, 20)
         }
@@ -59,6 +77,94 @@ struct LocationView: View {
 }
 
 extension LocationView {
+    var background: some View {
+        Color(red: 248/255, green: 248/255, blue: 248/255)
+    }
+    
+    var repeatingAnimation: Animation {
+        Animation
+            .linear(duration: 1)
+            .repeatForever()
+    }
+    
+    var functionalButtons: some View {
+        Group {
+            Button(action: {
+                viewModel.setRandomLocation()
+                timeManager.waitUntilNextChance()
+            }) {
+                Image(systemName: "arrow.clockwise")
+            }
+            .foregroundColor(.black)
+            .disabled(!timeManager.isActive)
+            
+            Spacer()
+            
+            Button(action: { viewModel.setCurrentLocation() }) {
+                Image(systemName: "scope")
+            }
+            .foregroundColor(.black)
+            
+            Button(action: { }) {
+                Image(systemName: "square.and.arrow.up")
+            }
+            .foregroundColor(.black)
+            
+        }
+    }
+    
+    var defaultView: some View {
+        Group {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(.gray.opacity(0.3))
+                .frame(height: 142)
+                .padding(.bottom, 18)
+                        
+            RoundedRectangle(cornerRadius: 15)
+                .fill(.gray.opacity(0.3))
+                .frame(width: 99, height: 14)
+                .padding(.bottom, 2)
+            
+            HStack {
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(.gray.opacity(0.3))
+                    .frame(width: 142, height: 35)
+                
+                Spacer()
+                
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(.gray.opacity(0.3))
+                    .frame(width: 70, height: 35)
+            }
+            .padding(.bottom, 48)
+            
+            RoundedRectangle(cornerRadius: 15)
+                .fill(.gray.opacity(0.3))
+                .frame(width: 108, height: 14)
+                .padding(.bottom, 18)
+            
+            VStack(spacing: 20) {
+                HStack(spacing: 16) {
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(.gray.opacity(0.3))
+                        .frame(height: 110)
+                    
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(.gray.opacity(0.3))
+                        .frame(height: 110)
+                }
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(.gray.opacity(0.3))
+                    .frame(height: 110)
+
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(.gray.opacity(0.3))
+                    .frame(height: 110)
+            }
+        }
+    }
+    
+
     struct CardView: View {
         let category: String
         let note: String

@@ -13,7 +13,9 @@ struct QuickWeatherApp: App {
     
     var body: some Scene {
         WindowGroup {
-            FirstView()
+//            FirstView()
+//                .environmentObject(localDataManager)
+            LocationView()
                 .environmentObject(localDataManager)
         }
     }
