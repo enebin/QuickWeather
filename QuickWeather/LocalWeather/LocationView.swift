@@ -11,8 +11,9 @@ struct LocationView: View {
     @EnvironmentObject var viewModel: LocationDataManager
     @StateObject var timeManager = TimeManager()
 
-    @State var isLoading = true
-
+    @State var pulseParameter = true
+    @State var showSheet = false
+    
     var body: some View {
         ZStack {
             background
@@ -60,18 +61,24 @@ struct LocationView: View {
                             .frame(height: 110)
                         CardView(category: "Guest book", note: "\"Veni vidi vici\"", subtitle: "21.02.21 22: 34 by Caesar")
                             .frame(height: 110)
+                            .onTapGesture {
+                                showSheet = true
+                            }
                     }
                 } else {
                     defaultView
-                        .opacity(isLoading ? 1 : 0.5)
+                        .opacity(pulseParameter ? 1 : 0.5)
                         .onAppear {
                             withAnimation(self.repeatingAnimation) {
-                                self.isLoading.toggle()
+                                self.pulseParameter.toggle()
                             }
                         }
                 }
             }
             .padding(.horizontal, 20)
+            .sheet(isPresented: $showSheet, onDismiss: { showSheet = false }) {
+                sheetContent
+            }
         }
     }
 }
@@ -87,6 +94,11 @@ extension LocationView {
             .repeatForever()
     }
     
+    var sheetContent: some View {
+        Text("Coming soon")
+            .font(.title)
+    }
+        
     var functionalButtons: some View {
         Group {
             Button(action: {
