@@ -10,6 +10,8 @@
 		9B146F6827BA1CF70072F992 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B146F6727BA1CF70072F992 /* GoogleService-Info.plist */; };
 		9B146F6B27BA1F7C0072F992 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9B146F6A27BA1F7C0072F992 /* FirebaseAuth */; };
 		9B146F6D27BA1F7C0072F992 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9B146F6C27BA1F7C0072F992 /* FirebaseFirestore */; };
+		9B146F6F27BA27C90072F992 /* GuestBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B146F6E27BA27C90072F992 /* GuestBookView.swift */; };
+		9B146F7127BA32910072F992 /* GuestBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B146F7027BA32910072F992 /* GuestBookViewModel.swift */; };
 		9B4AA32327AFD30800547AD8 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4AA32227AFD30800547AD8 /* FirstView.swift */; };
 		9B66C89127B8E61C00671751 /* arial.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C88E27B8E61C00671751 /* arial.TTF */; };
 		9B66C89227B8E61C00671751 /* arial_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C88F27B8E61C00671751 /* arial_black.ttf */; };
@@ -24,14 +26,14 @@
 		9BE5003527AE4BA200977BB2 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5002427AE4BA200977BB2 /* Formatter.swift */; };
 		9BE5003627AE4BA200977BB2 /* WeatherDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5002527AE4BA200977BB2 /* WeatherDataManager.swift */; };
 		9BE5003727AE4BA200977BB2 /* LocalWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5002727AE4BA200977BB2 /* LocalWeather.swift */; };
-		9BE5003827AE4BA200977BB2 /* LocalWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5002827AE4BA200977BB2 /* LocalWeatherView.swift */; };
-		9BE5003927AE4BA200977BB2 /* LocalWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5002927AE4BA200977BB2 /* LocalWeatherViewModel.swift */; };
 		9BE5003A27AE4BA200977BB2 /* APIKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9BE5002A27AE4BA200977BB2 /* APIKeys.plist */; };
 		9BE5003E27AE4BA200977BB2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE5002F27AE4BA200977BB2 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9B146F6727BA1CF70072F992 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9B146F6E27BA27C90072F992 /* GuestBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestBookView.swift; sourceTree = "<group>"; };
+		9B146F7027BA32910072F992 /* GuestBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestBookViewModel.swift; sourceTree = "<group>"; };
 		9B4AA32227AFD30800547AD8 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		9B4AA32427AFDDE600547AD8 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9B66C88D27B8E5FF00671751 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -49,8 +51,6 @@
 		9BE5002427AE4BA200977BB2 /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		9BE5002527AE4BA200977BB2 /* WeatherDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherDataManager.swift; sourceTree = "<group>"; };
 		9BE5002727AE4BA200977BB2 /* LocalWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalWeather.swift; sourceTree = "<group>"; };
-		9BE5002827AE4BA200977BB2 /* LocalWeatherView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalWeatherView.swift; sourceTree = "<group>"; };
-		9BE5002927AE4BA200977BB2 /* LocalWeatherViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalWeatherViewModel.swift; sourceTree = "<group>"; };
 		9BE5002A27AE4BA200977BB2 /* APIKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKeys.plist; sourceTree = "<group>"; };
 		9BE5002F27AE4BA200977BB2 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,9 +137,9 @@
 			children = (
 				9BE5002727AE4BA200977BB2 /* LocalWeather.swift */,
 				9BDD90C127B2A9B10072D47F /* MapView.swift */,
-				9BE5002827AE4BA200977BB2 /* LocalWeatherView.swift */,
-				9BE5002927AE4BA200977BB2 /* LocalWeatherViewModel.swift */,
 				9B66C89427B8E8B600671751 /* LocationView.swift */,
+				9B146F6E27BA27C90072F992 /* GuestBookView.swift */,
+				9B146F7027BA32910072F992 /* GuestBookViewModel.swift */,
 			);
 			path = LocalWeather;
 			sourceTree = "<group>";
@@ -229,14 +229,14 @@
 				9BDD90C227B2A9B10072D47F /* MapView.swift in Sources */,
 				9B66C89527B8E8B600671751 /* LocationView.swift in Sources */,
 				9BE5003727AE4BA200977BB2 /* LocalWeather.swift in Sources */,
-				9BE5003827AE4BA200977BB2 /* LocalWeatherView.swift in Sources */,
 				9BE5003427AE4BA200977BB2 /* Extensions.swift in Sources */,
 				9BE5003527AE4BA200977BB2 /* Formatter.swift in Sources */,
 				9BE5003E27AE4BA200977BB2 /* LocationManager.swift in Sources */,
+				9B146F6F27BA27C90072F992 /* GuestBookView.swift in Sources */,
 				9BC482EB27B6390200A8FF43 /* LocationDataManager.swift in Sources */,
 				9B4AA32327AFD30800547AD8 /* FirstView.swift in Sources */,
-				9BE5003927AE4BA200977BB2 /* LocalWeatherViewModel.swift in Sources */,
 				9BE5001527AE4B5500977BB2 /* QuickWeatherApp.swift in Sources */,
+				9B146F7127BA32910072F992 /* GuestBookViewModel.swift in Sources */,
 				9BE5003627AE4BA200977BB2 /* WeatherDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

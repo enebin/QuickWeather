@@ -14,29 +14,29 @@ struct FirstView: View {
     
     var body: some View {
         NavigationView {
-            LocalWeatherView()
-                .environmentObject(locationDataManager)
-                .navigationTitle("")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar(content: {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            locationDataManager.setCurrentLocation()
-                        }) {
-                            Image(systemName: "scope")
-                        }
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            locationDataManager.setRandomLocation()
-                            timeManager.waitUntilNextChance()
-                        }) {
-                            Image(systemName: "arrow.clockwise")
-                        }
-                        .disabled(!timeManager.isActive)
-                    }
-                })
-                .accentColor(.white)
+//            LocalWeatherView()
+//                .environmentObject(locationDataManager)
+//                .navigationTitle("")
+//                .navigationBarTitleDisplayMode(.inline)
+//                .toolbar(content: {
+//                    ToolbarItem(placement: .navigationBarLeading) {
+//                        Button(action: {
+//                            locationDataManager.setCurrentLocation()
+//                        }) {
+//                            Image(systemName: "scope")
+//                        }
+//                    }
+//                    ToolbarItem(placement: .navigationBarTrailing) {
+//                        Button(action: {
+//                            locationDataManager.setRandomLocation()
+//                            timeManager.waitUntilNextChance()
+//                        }) {
+//                            Image(systemName: "arrow.clockwise")
+//                        }
+//                        .disabled(!timeManager.isActive)
+//                    }
+//                })
+//                .accentColor(.white)
         }
     }
 }

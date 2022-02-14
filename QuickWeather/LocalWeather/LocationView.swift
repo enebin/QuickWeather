@@ -65,6 +65,9 @@ struct LocationView: View {
                                 showSheet = true
                             }
                     }
+                    .sheet(isPresented: $showSheet, onDismiss: { showSheet = false }) {
+                        GuestBookView(viewModel: GuestBookViewModel(name: cityName, location: coord))
+                    }
                 } else {
                     defaultView
                         .opacity(pulseParameter ? 1 : 0.5)
@@ -76,9 +79,6 @@ struct LocationView: View {
                 }
             }
             .padding(.horizontal, 20)
-            .sheet(isPresented: $showSheet, onDismiss: { showSheet = false }) {
-                sheetContent
-            }
         }
     }
 }

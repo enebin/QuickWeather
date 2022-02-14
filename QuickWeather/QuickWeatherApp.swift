@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct QuickWeatherApp: App {
     @StateObject var localDataManager = LocationDataManager()
-    
+    init() { FirebaseApp.configure() }
+
     var body: some Scene {
         WindowGroup {
 //            FirstView()
