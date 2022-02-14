@@ -47,11 +47,11 @@ class LocationDataManager: NSObject, ObservableObject {
         self.cityName = nil
         self.time = nil
         
-        let randLat = Int.random(in: -90...90)
-        let randLon = Int.random(in: -180...180)
+        let randLat = Int.random(in: -900...900)
+        let randLon = Int.random(in: -1800...1800)
         
-        let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(randLat),
-                                            longitude: CLLocationDegrees(randLon))
+        let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(Double(randLat)/10.0),
+                                           longitude: CLLocationDegrees(Double(randLon)/10.0))
         
         self.coord = coord
         let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
