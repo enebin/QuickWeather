@@ -20,13 +20,19 @@ struct GuestBookView: View {
                 background
                     .ignoresSafeArea()
                     
-                VStack(alignment: .leading, spacing: 25) {
+                VStack(alignment: .leading, spacing: 0) {
                     if let notes = viewModel.notes {
                         header
+                            .padding(.bottom, 35)
 
                         if notes.isEmpty {
                            emptyView
                         } else {
+                            Text("\(viewModel.notes.count) pioneers left their mark")
+                                .font(.arial.cardtitle)
+                                .foregroundColor(.gray)
+                                .padding(.bottom, 12)
+                            
                             ScrollView(showsIndicators: false) {
                                 VStack(alignment: .center, spacing: 25) {
                                     ForEach(notes, id: \.id) { note in

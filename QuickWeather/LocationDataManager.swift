@@ -109,7 +109,7 @@ class LocationDataManager: NSObject, ObservableObject {
             city = placemark.first?.administrativeArea
             time = placemark.first?.timeZone
                         
-            let parsedCountry = country ?? "Somewhere..."
+            let parsedCountry = country ?? "Far far away..."
             let parsedCity = city ?? "No man's land"
             let parsedTime = self.timeCalcultor(tz: time)
             
