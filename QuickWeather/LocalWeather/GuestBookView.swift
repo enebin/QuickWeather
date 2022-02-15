@@ -35,7 +35,7 @@ struct GuestBookView: View {
                             
                             ScrollView(showsIndicators: false) {
                                 VStack(alignment: .center, spacing: 25) {
-                                    ForEach(notes, id: \.id) { note in
+                                    ForEach(viewModel.pagedNotes, id: \.id) { note in
                                         CardView(category: "\(note.date)", note: "\"\(note.texts)\"", subtitle: "by \(note.writer)")
                                             .frame(height: 110)
                                     }

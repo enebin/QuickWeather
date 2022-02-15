@@ -14,9 +14,14 @@ class GuestBookViewModel: ObservableObject {
     @Published var locationName: String
     @Published var location: CLLocationCoordinate2D
     @Published var notes: [Note]
+    @Published var page = 1
     
-    func addNote() {
+    var pagedNotes: [Note] {
+        if self.notes.isEmpty {
+            return []
+        }
         
+        return Array(notes[0...min(self.page * 10, notes.count-1)])
     }
     
     init(name: String, location: CLLocationCoordinate2D, notes: [Note]) {
