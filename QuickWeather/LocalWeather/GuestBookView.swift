@@ -18,37 +18,41 @@ struct GuestBookView: View {
     }
     
     var body: some View {
-        ZStack {
-            background
-                .ignoresSafeArea()
-                
-            VStack(alignment: .leading, spacing: 25) {
-                if let notes = viewModel.notes {
-                    header
+        NavigationView {
+            ZStack {
+                background
+                    .ignoresSafeArea()
+                    
+                VStack(alignment: .leading, spacing: 25) {
+                    if let notes = viewModel.notes {
+                        header
 
-                    if notes.isEmpty {
-                       emptyView
-                    } else {
-                        ScrollView(showsIndicators: false) {
-                            VStack(alignment: .center, spacing: 25) {
-                                ForEach(notes, id: \.id) { note in
-                                    CardView(category: "\(note.date)", note: "\"\(note.texts)\"", subtitle: "by \(note.writer)")
-                                        .frame(height: 110)
+                        if notes.isEmpty {
+                           emptyView
+                        } else {
+                            ScrollView(showsIndicators: false) {
+                                VStack(alignment: .center, spacing: 25) {
+                                    ForEach(notes, id: \.id) { note in
+                                        CardView(category: "\(note.date)", note: "\"\(note.texts)\"", subtitle: "by \(note.writer)")
+                                            .frame(height: 110)
+                                    }
                                 }
                             }
                         }
-                    }
-                } else {
-                    defaultView
-                    .onAppear {
-                        withAnimation(self.repeatingAnimation) {
-                            self.pulseParameter.toggle()
+                    } else {
+                        defaultView
+                        .onAppear {
+                            withAnimation(self.repeatingAnimation) {
+                                self.pulseParameter.toggle()
+                            }
                         }
                     }
                 }
+                .padding(.horizontal, 35)
             }
-            .padding(.horizontal, 35)
+            .navigationBarHidden(true)
         }
+        .accentColor(.black)
     }
 }
 
@@ -86,7 +90,8 @@ extension GuestBookView {
                 
                 Spacer()
                     
-                Button(action: {}) {
+                NavigationLink(destination: NewDocumentView().environmentObject(viewModel)
+                ) {
                     Image(systemName: "plus")
                         .foregroundColor(.black)
                 }
@@ -115,14 +120,19 @@ extension GuestBookView {
                         .rotationEffect(Angle(degrees: -14.5))
                     Spacer()
                     
-                    Button(action: {}) {
-                        Text("Leave a mark")
+                    NavigationLink(destination:
+                                    NewDocumentView().environmentObject(viewModel)
+                    ) {
+                        Text("Leave a messsage")
+                            .foregroundColor(.white)
                             .font(.arial.light)
                             .padding()
-                            .overlay(
+                            .background(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .stroke()
+                                    .fill(Color(red: 185/255, green: 212/255, blue: 82/255))
+                                    .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 5)
                             )
+                        
                     }
                     .foregroundColor(.black)
 

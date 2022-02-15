@@ -60,10 +60,8 @@ struct LocationView: View {
                         }
                         CardView(category: "Location", note: "\(countryName)", subtitle: "\(coord.latitude)º, \(coord.longitude)º")
                             .frame(height: 110)
-                        CardView(category: "Guest book",
-                                 note: "\"\(notes.first?.texts ?? "New spot..")\"",
-                                 subtitle: "\(notes.first?.date ?? "") by \(notes.first?.writer ?? "")",
-                                 showLink: true)
+                        GuestCardView(note: notes.first?.texts,
+                                      subtitle: "\(notes.first?.date ?? "") by \(notes.first?.writer ?? "")")
                             .frame(height: 110)
                             .onTapGesture {
                                 showSheet = true
@@ -180,12 +178,57 @@ extension LocationView {
         }
     }
     
+    struct GuestCardView: View {
+        let note: String?
+        let subtitle: String?
+        
+        var body: some View {
+            HStack {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("Guest book")
+                        .font(.arial.cardtitle)
+                        .foregroundColor(Color(red: 185/255, green: 212/255, blue: 82/255))
+                        .padding(.top, 14)
+                        .padding(.bottom, subtitle == nil ? 15 : 10)
+                         
+                    if let note = note, let subtitle = subtitle {
+                        Text("\"\(note)\"")
+                            .font(.arial.description)
+                        
+                        Text(subtitle)
+                            .font(.arial.subtitle)
+                            .foregroundColor(.gray)
+                    } else {
+                        Text("No one's ever been here")
+                            .font(.arial.description)
+                            .foregroundColor(.gray)
+                        Text("How about leaving footprints?")
+                            .font(.arial.subtitle)
+                            .foregroundColor(.gray.opacity(0.5))
+                    }
+                    
+                    Spacer()
+                }
+                Spacer()
+                
+                Image(systemName: "pencil")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.gray.opacity(0.5))
+                    .frame(width: 20, height: 20)
+            }
+            .padding(.horizontal, 23)
+            .background(RoundedRectangle(cornerRadius: 15)
+                            .fill(.white)
+                            .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 5)
+            )
+        }
+    }
 
     struct CardView: View {
         let category: String
         let note: String
         let subtitle: String?
-        var showLink: Bool = false
         
         var body: some View {
             HStack {
@@ -208,13 +251,6 @@ extension LocationView {
                     Spacer()
                 }
                 Spacer()
-                if showLink {
-                    Image(systemName: "link")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(.gray.opacity(0.5))
-                        .frame(width: 20, height: 20)
-                }
             }
             .padding(.horizontal, 23)
             .background(RoundedRectangle(cornerRadius: 15)
