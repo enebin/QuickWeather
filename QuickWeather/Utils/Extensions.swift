@@ -33,6 +33,7 @@ extension Font {
         let cityname = Font.custom("ArialCEMTBlack-Regular", size: 25)
         let cardtitle = Font.custom("Arial-BoldMT", size: 15)
         let description = Font.custom("Arial-BoldMT", size: 20)
+        let light = Font.custom("ArialHebrew", size: 15)
     }
     
     static let arial = Arial()

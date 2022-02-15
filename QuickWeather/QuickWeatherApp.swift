@@ -15,10 +15,17 @@ struct QuickWeatherApp: App {
 
     var body: some Scene {
         WindowGroup {
-//            FirstView()
-//                .environmentObject(localDataManager)
             LocationView()
                 .environmentObject(localDataManager)
+//                .onAppear {
+//                    for family in UIFont.familyNames {
+//                        print("\(family)")
+//
+//                        for name in UIFont.fontNames(forFamilyName: family) {
+//                            print("\(name)")
+//                        }
+//                    }
+//                }
         }
     }
 }

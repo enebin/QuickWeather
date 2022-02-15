@@ -9,10 +9,15 @@ import SwiftUI
 
 struct LocationView: View {
     @EnvironmentObject var viewModel: LocationDataManager
+    @ObservedObject var bookNotes: GuestBookViewModel
     @StateObject var timeManager = TimeManager()
 
     @State var pulseParameter = true
     @State var showSheet = false
+    
+    init() {
+        self.bookNotes = GuestBookViewModel(name: viewModel.cityName!, location: viewModel.coord!)
+    }
     
     var body: some View {
         ZStack {
@@ -23,7 +28,8 @@ struct LocationView: View {
                    let coord = viewModel.coord,
                    let cityName = viewModel.cityName,
                    let countryName = viewModel.countryName,
-                   let time = viewModel.time
+                   let time = viewModel.time,
+                   let notes = bookNotes.notes
                 {
                     MapView(location: coord)
                         .frame(height: 142)
@@ -59,14 +65,14 @@ struct LocationView: View {
                         }
                         CardView(category: "Location", note: "\(countryName)", subtitle: "\(coord.latitude)º, \(coord.longitude)º")
                             .frame(height: 110)
-                        CardView(category: "Guest book", note: "\"Veni vidi vici\"", subtitle: "21.02.21 22: 34 by Caesar")
+                        CardView(category: "Guest book", note: "\"\(notes.first?.texts) \(notes.count)\"", subtitle: "\(notes.first?.date) by \(notes.first?.writer)")
                             .frame(height: 110)
                             .onTapGesture {
                                 showSheet = true
                             }
                     }
                     .sheet(isPresented: $showSheet, onDismiss: { showSheet = false }) {
-                        GuestBookView(viewModel: GuestBookViewModel(name: cityName, location: coord))
+                        GuestBookView(viewModel: bookNotes)
                     }
                 } else {
                     defaultView

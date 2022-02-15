@@ -19,6 +19,12 @@ let monthFormatter: DateFormatter = {
     return formatter
 }()
 
+let yearMonthDayFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy.M.d"
+    return formatter
+}()
+
 let hourFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "HH"
