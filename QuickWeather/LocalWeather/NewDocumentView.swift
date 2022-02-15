@@ -42,7 +42,9 @@ struct NewDocumentView: View {
                 message: Text(viewModel.alertMessage),
                 dismissButton: .default(Text("Ok"), action: {
                     viewModel.showAlert = false
-                    self.showSheet = false
+                    if viewModel.alertTitle == "Cool!" {
+                        self.showSheet = false
+                    }
                 })
             )
         }

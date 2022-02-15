@@ -25,28 +25,19 @@ class NewDocumentViewModel: ObservableObject {
         let writer = self.name
         
         if self.name.isEmpty || self.message.isEmpty {
-            self.showAlert = true
-            self.alertTitle = "Oops!"
-            self.alertMessage = "Texts must not be emtpy"
-            self.isUploading = false
+            showAlertRoutine(title: "Oops!", message: "Texts must not be emtpy")
 
             return
         }
         
         if self.name.count > 20  {
-            self.showAlert = true
-            self.alertTitle = "Oops!"
-            self.alertMessage = "Name must not exceed 15 letters"
-            self.isUploading = false
+            showAlertRoutine(title: "Oops!", message: "Name must not exceed 15 letters")
 
             return
         }
         
         if self.message.count > 50  {
-            self.showAlert = true
-            self.alertTitle = "Oops!"
-            self.alertMessage = "Message must not exceed 50 letters"
-            self.isUploading = false
+            showAlertRoutine(title: "Oops!", message: "Message must not exceed 50 letters")
 
             return
         }
@@ -56,18 +47,15 @@ class NewDocumentViewModel: ObservableObject {
         FireStoreManager.addData(location, note) { result in
             switch result {
             case true:
-                self.isUploading = false
+                self.name = ""
+                self.message = ""
+                
+                self.showAlertRoutine(title: "Cool!", message: "Successfully uploaded!")
             case false:
-                self.isUploading = true
+                self.showAlertRoutine(title: "Oops!", message: "Something went wrong... Please try again in a minute.")
             }
             
-            self.name = ""
-            self.message = ""
             
-            self.showAlert = true
-            self.alertTitle = "Cool!"
-            self.alertMessage = "Successfully uploaded!"
-            self.isUploading = false
 
             print("Doc successfully uploaded")
         }
