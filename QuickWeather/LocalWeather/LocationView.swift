@@ -9,15 +9,10 @@ import SwiftUI
 
 struct LocationView: View {
     @EnvironmentObject var viewModel: LocationDataManager
-    @ObservedObject var bookNotes: GuestBookViewModel
     @StateObject var timeManager = TimeManager()
 
     @State var pulseParameter = true
     @State var showSheet = false
-    
-    init() {
-        self.bookNotes = GuestBookViewModel(name: viewModel.cityName!, location: viewModel.coord!)
-    }
     
     var body: some View {
         ZStack {
@@ -29,7 +24,7 @@ struct LocationView: View {
                    let cityName = viewModel.cityName,
                    let countryName = viewModel.countryName,
                    let time = viewModel.time,
-                   let notes = bookNotes.notes
+                   let notes = viewModel.notes
                 {
                     MapView(location: coord)
                         .frame(height: 142)
@@ -65,14 +60,17 @@ struct LocationView: View {
                         }
                         CardView(category: "Location", note: "\(countryName)", subtitle: "\(coord.latitude)º, \(coord.longitude)º")
                             .frame(height: 110)
-                        CardView(category: "Guest book", note: "\"\(notes.first?.texts) \(notes.count)\"", subtitle: "\(notes.first?.date) by \(notes.first?.writer)")
+                        CardView(category: "Guest book",
+                                 note: "\"\(notes.first?.texts ?? "New spot..")\"",
+                                 subtitle: "\(notes.first?.date ?? "") by \(notes.first?.writer ?? "")",
+                                 showLink: true)
                             .frame(height: 110)
                             .onTapGesture {
                                 showSheet = true
                             }
                     }
                     .sheet(isPresented: $showSheet, onDismiss: { showSheet = false }) {
-                        GuestBookView(viewModel: bookNotes)
+                        GuestBookView(viewModel: GuestBookViewModel(name: cityName, location: coord, notes: notes))
                     }
                 } else {
                     defaultView
@@ -187,6 +185,7 @@ extension LocationView {
         let category: String
         let note: String
         let subtitle: String?
+        var showLink: Bool = false
         
         var body: some View {
             HStack {
@@ -208,9 +207,16 @@ extension LocationView {
                     
                     Spacer()
                 }
-                .padding(.horizontal, 23)
                 Spacer()
+                if showLink {
+                    Image(systemName: "link")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.gray.opacity(0.5))
+                        .frame(width: 20, height: 20)
+                }
             }
+            .padding(.horizontal, 23)
             .background(RoundedRectangle(cornerRadius: 15)
                             .fill(.white)
                             .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 5)

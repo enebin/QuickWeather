@@ -20,6 +20,7 @@ class LocationDataManager: NSObject, ObservableObject {
     @Published var cityName: String?
     @Published var coord: CLLocationCoordinate2D?
     @Published var time: String?
+    @Published var notes: [Note]?
     @Published var locationStatus: CLAuthorizationStatus?
 
     override init() {
@@ -37,6 +38,7 @@ class LocationDataManager: NSObject, ObservableObject {
         self.countryName = nil
         self.cityName = nil
         self.time = nil
+        self.notes = nil
         
         locationManager.requestLocation()
     }
@@ -46,6 +48,7 @@ class LocationDataManager: NSObject, ObservableObject {
         self.countryName = nil
         self.cityName = nil
         self.time = nil
+        self.notes = nil
         
         let randLat = Int.random(in: -900...900)
         let randLon = Int.random(in: -1800...1800)
@@ -57,6 +60,9 @@ class LocationDataManager: NSObject, ObservableObject {
         let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
         getLocationNameAndTime(location)
         getLocalWeather(location)
+        FireStoreManager.loadData(location) { notes in
+            self.notes = notes
+        }
     }
     
     private func getLocalWeather(_ location: CLLocation) {
@@ -147,9 +153,13 @@ extension LocationDataManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        DispatchQueue.global(qos: .utility).async {
+        DispatchQueue.global(qos: .userInitiated).async {
             self.getLocationNameAndTime(location)
             self.getLocalWeather(location)
+            
+            FireStoreManager.loadData(location) { notes in
+                self.notes = notes
+            }
         }
         self.coord = location.coordinate
     }
