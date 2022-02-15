@@ -106,6 +106,7 @@
 				9B66C88C27B8E5D900671751 /* Fonts */,
 				9BE5002227AE4BA200977BB2 /* Utils */,
 				9BE5002627AE4BA200977BB2 /* LocalWeather */,
+				9B146F7527BB38F40072F992 /* TimeManager.swift */,
 				9BC482EA27B6390200A8FF43 /* LocationDataManager.swift */,
 				9B146F7727BB3A7F0072F992 /* WeatherDataManager.swift */,
 				9B146F7927BB3AD40072F992 /* FireStoreManager.swift */,
@@ -138,13 +139,12 @@
 		9BE5002627AE4BA200977BB2 /* LocalWeather */ = {
 			isa = PBXGroup;
 			children = (
-				9BE5002727AE4BA200977BB2 /* LocalWeather.swift */,
-				9BDD90C127B2A9B10072D47F /* MapView.swift */,
-				9B66C89427B8E8B600671751 /* LocationView.swift */,
 				9B146F6E27BA27C90072F992 /* GuestBookView.swift */,
-				9B1A332D27BB6D670018F3C0 /* NewDocumentView.swift */,
 				9B146F7027BA32910072F992 /* GuestBookViewModel.swift */,
-				9B146F7527BB38F40072F992 /* TimeManager.swift */,
+				9BE5002727AE4BA200977BB2 /* LocalWeather.swift */,
+				9B66C89427B8E8B600671751 /* LocationView.swift */,
+				9BDD90C127B2A9B10072D47F /* MapView.swift */,
+				9B1A332D27BB6D670018F3C0 /* NewDocumentView.swift */,
 				9B1A332F27BB7C390018F3C0 /* NewDocumentViewModel.swift */,
 			);
 			path = LocalWeather;

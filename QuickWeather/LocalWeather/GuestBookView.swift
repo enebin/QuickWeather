@@ -11,11 +11,8 @@ struct GuestBookView: View {
     @ObservedObject var viewModel: GuestBookViewModel
     
     @State var pulseParameter = false
+    @Binding var showSheet: Bool
     typealias CardView = LocationView.CardView
-    
-    init(viewModel: GuestBookViewModel) {
-        self.viewModel = viewModel
-    }
     
     var body: some View {
         NavigationView {
@@ -50,7 +47,10 @@ struct GuestBookView: View {
                 }
                 .padding(.horizontal, 35)
             }
-            .navigationBarHidden(true)
+            .navigationBarTitle("", displayMode: .inline)
+            .toolbar {
+                toolbarItems
+            }
         }
         .accentColor(.black)
     }
@@ -61,6 +61,17 @@ extension GuestBookView {
         Animation
             .linear(duration: 1)
             .repeatForever()
+    }
+    
+    var toolbarItems: some ToolbarContent {
+        Group {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { showSheet = false }) {
+                    Image(systemName: "xmark")
+                }
+                .foregroundColor(.black)
+            }
+        }
     }
     
     var background: some View {
@@ -81,7 +92,7 @@ extension GuestBookView {
                                 .foregroundColor(.gray.opacity(0.5))
                         }
                     }
-                    .padding(.top, 50)
+//                    .padding(.top, 50)
                     
                     Text("Around \(viewModel.locationName)(\(String(format:"%.1f", viewModel.location.longitude))º, \(String(format:"%.1f", viewModel.location.latitude))º)")
                         .font(.arial.subtitle)
@@ -89,11 +100,11 @@ extension GuestBookView {
                 }
                 
                 Spacer()
-                    
-                NavigationLink(destination: NewDocumentView().environmentObject(viewModel)
+                
+                NavigationLink(destination: NewDocumentView(showSheet: $showSheet).environmentObject(viewModel)
                 ) {
                     Image(systemName: "plus")
-                        .foregroundColor(.black)
+                        .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
                 }
             }
         }
@@ -121,7 +132,7 @@ extension GuestBookView {
                     Spacer()
                     
                     NavigationLink(destination:
-                                    NewDocumentView().environmentObject(viewModel)
+                                    NewDocumentView(showSheet: $showSheet).environmentObject(viewModel)
                     ) {
                         Text("Leave a messsage")
                             .foregroundColor(.white)

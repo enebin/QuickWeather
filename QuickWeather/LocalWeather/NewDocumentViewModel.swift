@@ -14,6 +14,7 @@ class NewDocumentViewModel: ObservableObject {
     @Published var isUploading = false
     
     @Published var showAlert = false
+    @Published var alertTitle = ""
     @Published var alertMessage = ""
     
     func submit(_ location2D: CLLocationCoordinate2D) {
@@ -25,19 +26,28 @@ class NewDocumentViewModel: ObservableObject {
         
         if self.name.isEmpty || self.message.isEmpty {
             self.showAlert = true
+            self.alertTitle = "Oops!"
             self.alertMessage = "Texts must not be emtpy"
+            self.isUploading = false
+
             return
         }
         
-        if self.name.count > 15  {
+        if self.name.count > 20  {
             self.showAlert = true
+            self.alertTitle = "Oops!"
             self.alertMessage = "Name must not exceed 15 letters"
+            self.isUploading = false
+
             return
         }
         
         if self.message.count > 50  {
             self.showAlert = true
+            self.alertTitle = "Oops!"
             self.alertMessage = "Message must not exceed 50 letters"
+            self.isUploading = false
+
             return
         }
         
@@ -50,7 +60,23 @@ class NewDocumentViewModel: ObservableObject {
             case false:
                 self.isUploading = true
             }
+            
+            self.name = ""
+            self.message = ""
+            
+            self.showAlert = true
+            self.alertTitle = "Cool!"
+            self.alertMessage = "Successfully uploaded!"
             self.isUploading = false
+
+            print("Doc successfully uploaded")
         }
+    }
+    
+    private func showAlertRoutine(title: String, message: String) {
+        self.showAlert = true
+        self.alertTitle = title
+        self.alertMessage = message
+        self.isUploading = false
     }
 }

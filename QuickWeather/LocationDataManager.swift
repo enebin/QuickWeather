@@ -65,6 +65,14 @@ class LocationDataManager: NSObject, ObservableObject {
         }
     }
     
+    func reloadNotes() {
+        guard let lat = coord?.latitude, let lon = coord?.longitude else { return }
+            
+        FireStoreManager.loadData(CLLocation(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lon))) { notes in
+            self.notes = notes
+        }
+    }
+    
     private func getLocalWeather(_ location: CLLocation) {
         WeatherDataManager.localWeatherPublisher(lon: location.coordinate.longitude,
                                                  lat: location.coordinate.latitude)
@@ -122,7 +130,6 @@ class LocationDataManager: NSObject, ObservableObject {
             return "Hmm.. where are you?"
         }
     }
-    
     
     var statusString: String {
         guard let status = locationStatus else {

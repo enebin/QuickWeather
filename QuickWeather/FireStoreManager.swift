@@ -107,4 +107,12 @@ class FireStoreManager {
         
         completion(true)
     }
+    
+    static func reload(_ location: CLLocation, _ note: Note, completion: @escaping (Bool) -> Void) {
+        let latitude = location.coordinate.latitude
+        let longitude = location.coordinate.longitude
+        
+        let documentKey = "\(String(format: "%.0f", latitude)).\(String(format: "%.0f", longitude))"
+        let locationDocument = db.collection("locations").document(documentKey)
+    }
 }

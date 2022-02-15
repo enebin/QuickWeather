@@ -11,6 +11,7 @@ import SwiftUI
 struct NewDocumentView: View {
     @EnvironmentObject var source: GuestBookViewModel
     @ObservedObject var viewModel = NewDocumentViewModel()
+    @Binding var showSheet: Bool
     
     var body: some View {
         ZStack {
@@ -37,9 +38,12 @@ struct NewDocumentView: View {
         }
         .alert(isPresented: $viewModel.showAlert) {
             Alert(
-                title: Text("Oops!"),
+                title: Text(viewModel.alertTitle),
                 message: Text(viewModel.alertMessage),
-                dismissButton: .default(Text("Ok"), action: { viewModel.showAlert = false })
+                dismissButton: .default(Text("Ok"), action: {
+                    viewModel.showAlert = false
+                    self.showSheet = false
+                })
             )
         }
         .navigationBarTitle("", displayMode: .inline)
@@ -78,11 +82,11 @@ extension NewDocumentView {
                         .fill(.white)
                         .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 5)
                 )
-                .padding(.bottom, 15)
-            Text("⚠️ Name must not exceed 15 letters")
+            Text("⚠️ Name must not exceed 20 letters")
                 .font(.arial.subtitle)
                 .foregroundColor(.gray.opacity(0.5))
-            
+                .padding(.bottom, 15)
+
             
             Text("Message")
                 .font(.arial.subtitle)
@@ -103,22 +107,29 @@ extension NewDocumentView {
     
     var submitButton: some View {
         Button(action: { viewModel.submit(source.location) }) {
-            Text("write")
-                .foregroundColor(.white)
-                .font(.arial.cardtitle)
-                .padding()
-                .frame(width: 110)
-                .background(
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color(red: 185/255, green: 212/255, blue: 82/255))
-                        .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 5)
-                )
+            Group {
+                if viewModel.isUploading {
+                    ProgressView()
+                } else {
+                    Text("write")
+                }
+            }
+            .foregroundColor(.white)
+            .font(.arial.cardtitle)
+            .padding()
+            .frame(width: 110)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color(red: 185/255, green: 212/255, blue: 82/255))
+                    .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 5)
+            )
         }
+        .disabled(viewModel.isUploading)
     }
 }
 
 struct NewDocumentView_Previews: PreviewProvider {
     static var previews: some View {
-        NewDocumentView()
+        NewDocumentView(showSheet: .constant(true))
     }
 }

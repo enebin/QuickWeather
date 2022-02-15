@@ -67,8 +67,11 @@ struct LocationView: View {
                                 showSheet = true
                             }
                     }
-                    .sheet(isPresented: $showSheet, onDismiss: { showSheet = false }) {
-                        GuestBookView(viewModel: GuestBookViewModel(name: cityName, location: coord, notes: notes))
+                    .sheet(isPresented: $showSheet, onDismiss: {
+                        showSheet = false
+                        viewModel.reloadNotes()
+                    }) {
+                        GuestBookView(viewModel: GuestBookViewModel(name: cityName, location: coord, notes: notes), showSheet: $showSheet)
                     }
                 } else {
                     defaultView
@@ -237,7 +240,7 @@ extension LocationView {
                         .font(.arial.cardtitle)
                         .foregroundColor(Color(red: 185/255, green: 212/255, blue: 82/255))
                         .padding(.top, 14)
-                        .padding(.bottom, subtitle == nil ? 15 : 10)
+                        .padding(.bottom, subtitle == nil ? 16 : 13)
                     
                     Text(note)
                         .font(.arial.description)
