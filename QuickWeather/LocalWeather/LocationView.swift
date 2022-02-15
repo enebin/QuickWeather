@@ -69,7 +69,7 @@ struct LocationView: View {
                     }
                     .sheet(isPresented: $showSheet, onDismiss: {
                         showSheet = false
-                        viewModel.reloadNotes()
+                        viewModel.loadNotes()
                     }) {
                         GuestBookView(viewModel: GuestBookViewModel(name: cityName, location: coord, notes: notes), showSheet: $showSheet)
                     }

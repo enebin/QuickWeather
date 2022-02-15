@@ -60,16 +60,19 @@ class LocationDataManager: NSObject, ObservableObject {
         let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
         getLocationNameAndTime(location)
         getLocalWeather(location)
-        FireStoreManager.loadData(location) { notes in
-            self.notes = notes
-        }
+        loadNotes(location)
     }
     
-    func reloadNotes() {
+    func loadNotes(_ location: CLLocation? = nil) {
         guard let lat = coord?.latitude, let lon = coord?.longitude else { return }
-            
-        FireStoreManager.loadData(CLLocation(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lon))) { notes in
-            self.notes = notes
+        var loc = CLLocation(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lon))
+
+        if location != nil {
+            loc = location!
+        }
+        
+        FireStoreManager.loadData(loc) { notes in
+            self.notes = notes.sorted { $0.time > $1.time } 
         }
     }
     
@@ -163,10 +166,8 @@ extension LocationDataManager: CLLocationManagerDelegate {
         DispatchQueue.global(qos: .userInitiated).async {
             self.getLocationNameAndTime(location)
             self.getLocalWeather(location)
-            
-            FireStoreManager.loadData(location) { notes in
-                self.notes = notes
-            }
+            self.loadNotes(location)
+
         }
         self.coord = location.coordinate
     }
