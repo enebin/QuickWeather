@@ -27,15 +27,9 @@ struct Note: Codable, Identifiable {
 }
 
 class FireStoreManager {
-    static let shared = FireStoreManager()
+    static var db = Firestore.firestore()
     
-    private var db = Firestore.firestore()
-    
-    init() {
-        
-    }
-    
-    func loadData(_ location: CLLocation, completion: @escaping ([Note]) -> Void) {
+    static func loadData(_ location: CLLocation, completion: @escaping ([Note]) -> Void) {
         let latitude = location.coordinate.latitude
         let longitude = location.coordinate.longitude
         
@@ -78,13 +72,39 @@ class FireStoreManager {
         }
     }
     
-    static func addData(_ location: CLLocation, completion: @escaping ([Note]) -> Void) {
+    static func addData(_ location: CLLocation, _ note: Note, completion: @escaping (Bool) -> Void) {
         let latitude = location.coordinate.latitude
         let longitude = location.coordinate.longitude
         
         let documentKey = "\(String(format: "%.0f", latitude)).\(String(format: "%.0f", longitude))"
-        let document = db.collection("locations").document(documentKey)
+        let locationDocument = db.collection("locations").document(documentKey)
         
+        locationDocument.getDocument { locationDocSnap, error in
+            if let error = error {
+                print(error)
+                completion(false)
+                return
+            }
+            
+            if let locationDocSnap = locationDocSnap {
+                if !locationDocSnap.exists {
+                    print("Doc doesn't exist")
+                    completion(false)
+                    return
+                }
+                
+                locationDocSnap.reference
+                    .collection("notes")
+                    .addDocument(data: ["texts" : note.texts, "writer" : note.writer, "time" : Timestamp(date: note.time)]) { error in
+                        if let error = error {
+                            print(error)
+                            completion(false)
+                            return
+                        }
+                    }
+            }
+        }
         
+        completion(true)
     }
 }

@@ -35,6 +35,13 @@ struct NewDocumentView: View {
             }
             .padding(.horizontal, 35)
         }
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(
+                title: Text("Oops!"),
+                message: Text(viewModel.alertMessage),
+                dismissButton: .default(Text("Ok"), action: { viewModel.showAlert = false })
+            )
+        }
         .navigationBarTitle("", displayMode: .inline)
     }
 }
@@ -72,6 +79,10 @@ extension NewDocumentView {
                         .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 5)
                 )
                 .padding(.bottom, 15)
+            Text("⚠️ Name must not exceed 15 letters")
+                .font(.arial.subtitle)
+                .foregroundColor(.gray.opacity(0.5))
+            
             
             Text("Message")
                 .font(.arial.subtitle)
@@ -84,14 +95,14 @@ extension NewDocumentView {
                         .fill(.white)
                         .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 5)
                 )
-            Text("⚠️ The text content can contain upto 50 characters")
+            Text("⚠️ Message must not exceed 50 letters")
                 .font(.arial.subtitle)
                 .foregroundColor(.gray.opacity(0.5))
         }
     }
     
     var submitButton: some View {
-        Button(action: {}) {
+        Button(action: { viewModel.submit(source.location) }) {
             Text("write")
                 .foregroundColor(.white)
                 .font(.arial.cardtitle)
