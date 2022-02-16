@@ -17,6 +17,7 @@
 		9B146F7A27BB3AD40072F992 /* FireStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B146F7927BB3AD40072F992 /* FireStoreManager.swift */; };
 		9B1A332E27BB6D670018F3C0 /* NewDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1A332D27BB6D670018F3C0 /* NewDocumentView.swift */; };
 		9B1A333027BB7C390018F3C0 /* NewDocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1A332F27BB7C390018F3C0 /* NewDocumentViewModel.swift */; };
+		9B5021AE27BD04C5004E87DF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9B5021AD27BD04C4004E87DF /* Settings.bundle */; };
 		9B66C89127B8E61C00671751 /* arial.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C88E27B8E61C00671751 /* arial.TTF */; };
 		9B66C89227B8E61C00671751 /* arial_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C88F27B8E61C00671751 /* arial_black.ttf */; };
 		9B66C89327B8E61C00671751 /* arial_bold.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C89027B8E61C00671751 /* arial_bold.TTF */; };
@@ -42,6 +43,7 @@
 		9B1A332D27BB6D670018F3C0 /* NewDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentView.swift; sourceTree = "<group>"; };
 		9B1A332F27BB7C390018F3C0 /* NewDocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentViewModel.swift; sourceTree = "<group>"; };
 		9B4AA32427AFDDE600547AD8 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9B5021AD27BD04C4004E87DF /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9B66C88D27B8E5FF00671751 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9B66C88E27B8E61C00671751 /* arial.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial.TTF; sourceTree = "<group>"; };
 		9B66C88F27B8E61C00671751 /* arial_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial_black.ttf; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 		9BE5001327AE4B5500977BB2 /* QuickWeather */ = {
 			isa = PBXGroup;
 			children = (
+				9B5021AD27BD04C4004E87DF /* Settings.bundle */,
 				9B146F6727BA1CF70072F992 /* GoogleService-Info.plist */,
 				9B66C88D27B8E5FF00671751 /* Info.plist */,
 				9B66C88C27B8E5D900671751 /* Fonts */,
@@ -215,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B5021AE27BD04C5004E87DF /* Settings.bundle in Resources */,
 				9BE5003A27AE4BA200977BB2 /* APIKeys.plist in Resources */,
 				9B66C89327B8E61C00671751 /* arial_bold.TTF in Resources */,
 				9BE5001C27AE4B5700977BB2 /* Preview Assets.xcassets in Resources */,

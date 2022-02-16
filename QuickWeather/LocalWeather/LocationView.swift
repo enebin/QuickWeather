@@ -19,6 +19,7 @@ struct LocationView: View {
             background
                 .ignoresSafeArea()
             VStack(alignment: .leading, spacing: 0) {
+                
                 if let weather = viewModel.weather,
                    let coord = viewModel.coord,
                    let cityName = viewModel.cityName,
