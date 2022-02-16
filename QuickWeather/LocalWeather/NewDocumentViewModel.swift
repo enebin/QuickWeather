@@ -54,9 +54,6 @@ class NewDocumentViewModel: ObservableObject {
             case false:
                 self.showAlertRoutine(title: "Oops!", message: "Something went wrong... Please try again in a minute.")
             }
-            
-            
-
             print("Doc successfully uploaded")
         }
     }

@@ -41,10 +41,13 @@ struct GuestBookView: View {
                                     }
                                     
                                     HStack {
-                                        ForEach((1...viewModel.numberOfPages), id: \.self) { num in
+                                        let startIndex = max(1, viewModel.page-2)
+                                        let endIndex = min(viewModel.page+2, viewModel.numberOfPages)
+                                        ForEach((startIndex...endIndex), id: \.self) { num in
                                             Button(action: {viewModel.page = num}) {
                                                 Text(String(num))
                                                     .foregroundColor(viewModel.page == num ? .black : .gray)
+                                                    .fontWeight(viewModel.page == num ? .bold : .regular)
                                             }
                                         }
                                     }
