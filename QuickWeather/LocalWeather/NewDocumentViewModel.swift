@@ -17,6 +17,18 @@ class NewDocumentViewModel: ObservableObject {
     @Published var alertTitle = ""
     @Published var alertMessage = ""
     
+    @Published var isFirst = true
+    
+    init() {
+        let userDefaultIsFirst = UserDefaults.standard.object(forKey: "isFirst")
+        
+        if userDefaultIsFirst == nil {
+            UserDefaults.standard.set(true, forKey: "isFirst")
+        } else {
+            self.isFirst = userDefaultIsFirst as! Bool
+        }
+    }
+    
     func submit(_ location2D: CLLocationCoordinate2D) {
         self.isUploading = true
         let location = CLLocation(latitude: CLLocationDegrees(location2D.latitude),
@@ -31,7 +43,7 @@ class NewDocumentViewModel: ObservableObject {
         }
         
         if self.name.count > 20  {
-            showAlertRoutine(title: "Oops!", message: "Name must not exceed 15 letters")
+            showAlertRoutine(title: "Oops!", message: "Name must not exceed 20 letters")
 
             return
         }
@@ -43,7 +55,6 @@ class NewDocumentViewModel: ObservableObject {
         }
         
         let note = Note(texts: texts, writer: writer, time: Date())
-        
         FireStoreManager.addData(location, note) { result in
             switch result {
             case true:
@@ -58,7 +69,7 @@ class NewDocumentViewModel: ObservableObject {
         }
     }
     
-    private func showAlertRoutine(title: String, message: String) {
+    func showAlertRoutine(title: String, message: String) {
         self.showAlert = true
         self.alertTitle = title
         self.alertMessage = message

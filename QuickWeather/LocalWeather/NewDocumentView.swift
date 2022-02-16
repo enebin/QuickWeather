@@ -21,7 +21,6 @@ struct NewDocumentView: View {
             VStack(alignment: .center) {
                 HStack {
                     header
-//                        .padding(.top, 50)
                     Spacer()
                 }
                 
@@ -30,22 +29,33 @@ struct NewDocumentView: View {
                 
                 Spacer()
                 
-               submitButton
+                submitButton
                 
                 Spacer()
             }
             .padding(.horizontal, 35)
         }
+        .onAppear {
+            if viewModel.isFirst {
+                viewModel.showAlertRoutine(title: "Notice",
+                                           message: "You can't edit or delete your message after you uploaded. Keep this in mind!")
+            }
+        }
         .alert(isPresented: $viewModel.showAlert) {
             Alert(
                 title: Text(viewModel.alertTitle),
                 message: Text(viewModel.alertMessage),
-                dismissButton: .default(Text("Ok"), action: {
-                    viewModel.showAlert = false
-                    if viewModel.alertTitle == "Cool!" {
-                        self.showSheet = false
-                    }
-                })
+                dismissButton:
+                        .default(Text(viewModel.alertTitle == "Notice" ? "Don't show again" : "Ok"),
+                                 action: {
+                                     viewModel.showAlert = false
+                                     if viewModel.alertTitle == "Cool!" {
+                                         self.showSheet = false
+                                     }
+                                     else if viewModel.alertTitle == "Notice" {
+                                         UserDefaults.standard.set(false, forKey: "isFirst")
+                                     }
+                                 })
             )
         }
         .navigationBarTitle("", displayMode: .inline)
@@ -108,7 +118,9 @@ extension NewDocumentView {
     }
     
     var submitButton: some View {
-        Button(action: { viewModel.submit(source.location) }) {
+        Button(action: {
+            viewModel.submit(source.location)
+        }) {
             Group {
                 if viewModel.isUploading {
                     ProgressView()
