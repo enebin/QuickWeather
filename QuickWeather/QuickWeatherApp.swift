@@ -9,8 +9,6 @@ import SwiftUI
 import Firebase
 
 // TODO: 누르는 횟수 제한 + 스토어 연동하기
-// TODO: 방명록 안내문 추가
-// TODO: 권한 미설정 시 블록
 
 
 @main
