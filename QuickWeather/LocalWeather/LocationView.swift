@@ -47,7 +47,7 @@ struct LocationView: View {
                     }
                     .padding(.bottom, 48)
                     
-                    Text("Details about them")
+                    Text("More about here")
                         .font(.arial.subtitle)
                         .foregroundColor(.gray)
                         .padding(.bottom, 18)

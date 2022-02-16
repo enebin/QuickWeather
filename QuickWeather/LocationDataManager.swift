@@ -27,7 +27,7 @@ class LocationDataManager: NSObject, ObservableObject {
         super.init()
         DispatchQueue.global(qos: .userInitiated).async {
             self.locationManager.delegate = self
-            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
             self.locationManager.requestWhenInUseAuthorization()
             self.locationManager.requestLocation()
         }

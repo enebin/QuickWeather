@@ -18,6 +18,7 @@
 		9B1A332E27BB6D670018F3C0 /* NewDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1A332D27BB6D670018F3C0 /* NewDocumentView.swift */; };
 		9B1A333027BB7C390018F3C0 /* NewDocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1A332F27BB7C390018F3C0 /* NewDocumentViewModel.swift */; };
 		9B5021AE27BD04C5004E87DF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9B5021AD27BD04C4004E87DF /* Settings.bundle */; };
+		9B5021B027BD10ED004E87DF /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5021AF27BD10ED004E87DF /* PurchaseManager.swift */; };
 		9B66C89127B8E61C00671751 /* arial.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C88E27B8E61C00671751 /* arial.TTF */; };
 		9B66C89227B8E61C00671751 /* arial_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C88F27B8E61C00671751 /* arial_black.ttf */; };
 		9B66C89327B8E61C00671751 /* arial_bold.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C89027B8E61C00671751 /* arial_bold.TTF */; };
@@ -42,8 +43,8 @@
 		9B146F7927BB3AD40072F992 /* FireStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreManager.swift; sourceTree = "<group>"; };
 		9B1A332D27BB6D670018F3C0 /* NewDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentView.swift; sourceTree = "<group>"; };
 		9B1A332F27BB7C390018F3C0 /* NewDocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentViewModel.swift; sourceTree = "<group>"; };
-		9B4AA32427AFDDE600547AD8 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		9B5021AD27BD04C4004E87DF /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		9B5021AF27BD10ED004E87DF /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
 		9B66C88D27B8E5FF00671751 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9B66C88E27B8E61C00671751 /* arial.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial.TTF; sourceTree = "<group>"; };
 		9B66C88F27B8E61C00671751 /* arial_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial_black.ttf; sourceTree = "<group>"; };
@@ -105,19 +106,19 @@
 			children = (
 				9B5021AD27BD04C4004E87DF /* Settings.bundle */,
 				9B146F6727BA1CF70072F992 /* GoogleService-Info.plist */,
+				9BE5002A27AE4BA200977BB2 /* APIKeys.plist */,
 				9B66C88D27B8E5FF00671751 /* Info.plist */,
+				9BE5001427AE4B5500977BB2 /* QuickWeatherApp.swift */,
 				9B66C88C27B8E5D900671751 /* Fonts */,
 				9BE5002227AE4BA200977BB2 /* Utils */,
 				9BE5002627AE4BA200977BB2 /* LocalWeather */,
-				9B146F7527BB38F40072F992 /* TimeManager.swift */,
+				9B5021AF27BD10ED004E87DF /* PurchaseManager.swift */,
 				9BC482EA27B6390200A8FF43 /* LocationDataManager.swift */,
 				9B146F7727BB3A7F0072F992 /* WeatherDataManager.swift */,
 				9B146F7927BB3AD40072F992 /* FireStoreManager.swift */,
-				9BE5001427AE4B5500977BB2 /* QuickWeatherApp.swift */,
-				9BE5002A27AE4BA200977BB2 /* APIKeys.plist */,
+				9B146F7527BB38F40072F992 /* TimeManager.swift */,
 				9BE5001827AE4B5700977BB2 /* Assets.xcassets */,
 				9BE5001A27AE4B5700977BB2 /* Preview Content */,
-				9B4AA32427AFDDE600547AD8 /* MyPlayground.playground */,
 			);
 			path = QuickWeather;
 			sourceTree = "<group>";
@@ -240,6 +241,7 @@
 				9BDD90C227B2A9B10072D47F /* MapView.swift in Sources */,
 				9B66C89527B8E8B600671751 /* LocationView.swift in Sources */,
 				9B1A332E27BB6D670018F3C0 /* NewDocumentView.swift in Sources */,
+				9B5021B027BD10ED004E87DF /* PurchaseManager.swift in Sources */,
 				9B146F7827BB3A800072F992 /* WeatherDataManager.swift in Sources */,
 				9B146F7A27BB3AD40072F992 /* FireStoreManager.swift in Sources */,
 				9BE5003727AE4BA200977BB2 /* LocalWeather.swift in Sources */,
