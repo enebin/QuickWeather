@@ -16,12 +16,23 @@ class GuestBookViewModel: ObservableObject {
     @Published var notes: [Note]
     @Published var page = 1
     
+    var numberOfPages: Int {
+        if self.notes.isEmpty {
+            return 0
+        }
+        
+        return Int((self.notes.count)/10) + 1
+    }
+    
     var pagedNotes: [Note] {
         if self.notes.isEmpty {
             return []
         }
         
-        return Array(notes[0...min(self.page * 10, notes.count-1)])
+        let startIndex = (self.page - 1)*10
+        let endIndex = min(self.page * 10 - 1, notes.count-1)
+        
+        return Array(notes[startIndex...endIndex])
     }
     
     init(name: String, location: CLLocationCoordinate2D, notes: [Note]) {

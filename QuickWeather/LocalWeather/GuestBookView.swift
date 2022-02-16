@@ -39,6 +39,15 @@ struct GuestBookView: View {
                                         CardView(category: "\(note.date)", note: "\"\(note.texts)\"", subtitle: "by \(note.writer)")
                                             .frame(height: 110)
                                     }
+                                    
+                                    HStack {
+                                        ForEach((1...viewModel.numberOfPages), id: \.self) { num in
+                                            Button(action: {viewModel.page = num}) {
+                                                Text(String(num))
+                                                    .foregroundColor(viewModel.page == num ? .black : .gray)
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
