@@ -31,7 +31,6 @@ class GuestBookViewModel: ObservableObject {
         
         let startIndex = (self.page - 1) * 10
         let endIndex = min(self.page * 10 - 1, notes.count-1)
-        print(startIndex, endIndex)
         return Array(notes[startIndex...endIndex])
     }
     

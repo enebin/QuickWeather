@@ -65,7 +65,6 @@ class FireStoreManager {
                 } else {
                     document.setData([:])
                     print("doc made")
-                    
                     completion([])
                 }
             }
