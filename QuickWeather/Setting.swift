@@ -9,17 +9,13 @@ import SwiftUI
 import Combine
 
 class Setting: ObservableObject {
-    enum TemperatureType: String {
-        case celcius = "Celcius"
-        case ferenheit = "Ferenheit"
-    }
-    
-    @Published var tempType: TemperatureType
     private var subsriptions = Set<AnyCancellable>()
     
-    init() {
+    @Published var tempType: TemperatureType
+    @Published var chanceLeft: Int
+    
+    private func loadTempType() {
         if let defaultTempUnit = UserDefaults.standard.object(forKey: "tempUnit") {
-            print(defaultTempUnit)
             if let tempType = TemperatureType(rawValue: defaultTempUnit as! String) {
                 self.tempType = tempType
             } else {
@@ -30,11 +26,36 @@ class Setting: ObservableObject {
             UserDefaults.standard.set("Celcius", forKey: "tempUnit")
             self.tempType = TemperatureType(rawValue: "Celcius")!
         }
+    }
+    
+    //TODO: Improve here
+    private func loadChanceLeft() {
+        if let chanceLeftToday = UserDefaults.standard.object(forKey: "chanceLeft") {
+            self.chanceLeft = chanceLeftToday as! Int
+        } else {
+            UserDefaults.standard.set("10", forKey: "chanceLeft")
+            self.chanceLeft = 10
+        }
+    }
+    
+    init() {
+        self.tempType = .celcius
+        self.chanceLeft = 0
+        
+        loadTempType()
+//        loadChanceLeft()
         
         $tempType
             .sink { tempType in
                 UserDefaults.standard.set(tempType.rawValue, forKey: "tempUnit")
             }
             .store(in: &subsriptions)
+    }
+}
+
+extension Setting {
+    enum TemperatureType: String {
+        case celcius = "Celcius"
+        case ferenheit = "Ferenheit"
     }
 }

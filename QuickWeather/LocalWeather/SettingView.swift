@@ -17,11 +17,24 @@ struct SettingView: View {
                 Text("Setting")
                     .font(.arial.cityname)
                     .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
-                    .padding(.top, 10)
+                    .padding(.vertical, 10)
+                                
+                tempUnit
                 
                 Spacer()
-                
-                tempUnit
+
+                HStack {
+                    Spacer()
+                    VStack {
+                        Text("Art of blank space")
+                            .font(.arial.cityname)
+                        Text("It will be full... someday...")
+                            .font(.arial.subtitle)
+                    }
+                    .foregroundColor(.gray.opacity(0.3))
+
+                    Spacer()
+                }
                 
                 Spacer()
             }

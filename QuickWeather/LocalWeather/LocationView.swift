@@ -73,7 +73,7 @@ struct LocationView: View {
                             CardView(category: "Time", note: "\(time)", subtitle: nil)
                                 .frame(height: 110)
                         }
-                        CardView(category: "Location", note: "\(countryName)", subtitle: "\(coord.latitude)º, \(coord.longitude)º")
+                        CardView(category: "Location", note: "\(countryName)", subtitle: "\(String(format: "%.1f", coord.latitude))º, \((String(format: "%.1f", coord.longitude)))º")
                             .frame(height: 110)
                         GuestCardView(note: notes.first?.texts,
                                       subtitle: "\(notes.first?.date ?? "") by \(notes.first?.writer ?? "")")
@@ -144,9 +144,9 @@ extension LocationView {
             }
             .foregroundColor(.black)
             
-            Button(action: { }) {
-                Image(systemName: "square.and.arrow.up")
-            }
+//            Button(action: { }) {
+//                Image(systemName: "square.and.arrow.up")
+//            }
             .foregroundColor(.black)
             
         }
