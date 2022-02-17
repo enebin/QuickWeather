@@ -19,6 +19,8 @@
 		9B1A333027BB7C390018F3C0 /* NewDocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1A332F27BB7C390018F3C0 /* NewDocumentViewModel.swift */; };
 		9B5021AE27BD04C5004E87DF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9B5021AD27BD04C4004E87DF /* Settings.bundle */; };
 		9B5021B027BD10ED004E87DF /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5021AF27BD10ED004E87DF /* PurchaseManager.swift */; };
+		9B5021B327BDE31E004E87DF /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5021B227BDE31E004E87DF /* Setting.swift */; };
+		9B5021B527BDE53E004E87DF /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5021B427BDE53E004E87DF /* SettingView.swift */; };
 		9B66C89127B8E61C00671751 /* arial.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C88E27B8E61C00671751 /* arial.TTF */; };
 		9B66C89227B8E61C00671751 /* arial_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C88F27B8E61C00671751 /* arial_black.ttf */; };
 		9B66C89327B8E61C00671751 /* arial_bold.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9B66C89027B8E61C00671751 /* arial_bold.TTF */; };
@@ -45,6 +47,9 @@
 		9B1A332F27BB7C390018F3C0 /* NewDocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentViewModel.swift; sourceTree = "<group>"; };
 		9B5021AD27BD04C4004E87DF /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9B5021AF27BD10ED004E87DF /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		9B5021B127BDC871004E87DF /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9B5021B227BDE31E004E87DF /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		9B5021B427BDE53E004E87DF /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		9B66C88D27B8E5FF00671751 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9B66C88E27B8E61C00671751 /* arial.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial.TTF; sourceTree = "<group>"; };
 		9B66C88F27B8E61C00671751 /* arial_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial_black.ttf; sourceTree = "<group>"; };
@@ -88,6 +93,7 @@
 		9BE5000827AE4B5500977BB2 = {
 			isa = PBXGroup;
 			children = (
+				9B5021B127BDC871004E87DF /* MyPlayground.playground */,
 				9BE5001327AE4B5500977BB2 /* QuickWeather */,
 				9BE5001227AE4B5500977BB2 /* Products */,
 			);
@@ -113,6 +119,7 @@
 				9BE5002227AE4BA200977BB2 /* Utils */,
 				9BE5002627AE4BA200977BB2 /* LocalWeather */,
 				9B5021AF27BD10ED004E87DF /* PurchaseManager.swift */,
+				9B5021B227BDE31E004E87DF /* Setting.swift */,
 				9BC482EA27B6390200A8FF43 /* LocationDataManager.swift */,
 				9B146F7727BB3A7F0072F992 /* WeatherDataManager.swift */,
 				9B146F7927BB3AD40072F992 /* FireStoreManager.swift */,
@@ -150,6 +157,7 @@
 				9BDD90C127B2A9B10072D47F /* MapView.swift */,
 				9B1A332D27BB6D670018F3C0 /* NewDocumentView.swift */,
 				9B1A332F27BB7C390018F3C0 /* NewDocumentViewModel.swift */,
+				9B5021B427BDE53E004E87DF /* SettingView.swift */,
 			);
 			path = LocalWeather;
 			sourceTree = "<group>";
@@ -243,8 +251,10 @@
 				9B1A332E27BB6D670018F3C0 /* NewDocumentView.swift in Sources */,
 				9B5021B027BD10ED004E87DF /* PurchaseManager.swift in Sources */,
 				9B146F7827BB3A800072F992 /* WeatherDataManager.swift in Sources */,
+				9B5021B327BDE31E004E87DF /* Setting.swift in Sources */,
 				9B146F7A27BB3AD40072F992 /* FireStoreManager.swift in Sources */,
 				9BE5003727AE4BA200977BB2 /* LocalWeather.swift in Sources */,
+				9B5021B527BDE53E004E87DF /* SettingView.swift in Sources */,
 				9BE5003427AE4BA200977BB2 /* Extensions.swift in Sources */,
 				9BE5003527AE4BA200977BB2 /* Formatter.swift in Sources */,
 				9B146F6F27BA27C90072F992 /* GuestBookView.swift in Sources */,

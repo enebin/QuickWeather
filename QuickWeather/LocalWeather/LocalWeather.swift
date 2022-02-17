@@ -63,6 +63,10 @@ class LocalWeather: ObservableObject {
         return kelvin - 273.15
     }
     
+    private func toFerenheit(from kelvin: Double) -> Double {
+        return 1.8 * (kelvin - 273) + 32
+    }
+    
     var weather: String {
         return item.current.weather[0].main
     }
@@ -75,9 +79,14 @@ class LocalWeather: ObservableObject {
         return String(format: "%.1f", item.current.windSpeed)
     }
     
-    var temperature: String {
+    var celcius: String {
         let celcius = toCelcius(from: item.current.temperature)
         return String(format: "%.1f", celcius)
+    }
+    
+    var ferenheit: String {
+        let ferenheit = toFerenheit(from: item.current.temperature)
+        return String(format: "%.1f", ferenheit)
     }
     
     var temperatureFeelsLike: String {

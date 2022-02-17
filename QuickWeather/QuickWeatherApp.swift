@@ -9,13 +9,17 @@ import SwiftUI
 import Firebase
 
 // TODO: 누르는 횟수 제한 + 스토어 연동하기
-// TODO: 설정 창
-// TODO: 게스트북 인포 창
+
 // TODO: Share 버튼
+// TODO: Mini 화면 최적화
+// TODO: 서울 데이터 비우기
+// TODO: 아이콘 바꾸기
+
 
 @main
 struct QuickWeatherApp: App {
     @StateObject var localDataManager = LocationDataManager()
+    @StateObject var setting = Setting()
     
     init() {
         FirebaseApp.configure()
@@ -31,6 +35,7 @@ struct QuickWeatherApp: App {
                     // Main view
                     LocationView()
                         .environmentObject(localDataManager)
+                        .environmentObject(setting)
                         .onAppear {
                             localDataManager.setCurrentLocation()
                         }

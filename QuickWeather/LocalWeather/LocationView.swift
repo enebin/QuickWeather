@@ -9,17 +9,18 @@ import SwiftUI
 
 struct LocationView: View {
     @EnvironmentObject var viewModel: LocationDataManager
+    @EnvironmentObject var setting: Setting
     @StateObject var timeManager = TimeManager()
 
     @State var pulseParameter = true
-    @State var showSheet = false
+    @State var showNewDocSheet = false
+    @State var showSetting = false
     
     var body: some View {
         ZStack {
             background
                 .ignoresSafeArea()
             VStack(alignment: .leading, spacing: 0) {
-                
                 if let weather = viewModel.weather,
                    let coord = viewModel.coord,
                    let cityName = viewModel.cityName,
@@ -27,6 +28,17 @@ struct LocationView: View {
                    let time = viewModel.time,
                    let notes = viewModel.notes
                 {
+                    HStack {
+                        Spacer()
+                        Button(action: { showSetting = true }) {
+                            Image(systemName: "gearshape.fill")
+                                .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
+                        }
+                    }
+                    .padding(.top, 5)
+                    
+                    Spacer()
+                    
                     MapView(location: coord)
                         .frame(height: 142)
                         .clipShape(
@@ -54,7 +66,9 @@ struct LocationView: View {
                     
                     VStack(spacing: 20) {
                         HStack(spacing: 16) {
-                            CardView(category: "Weather", note: "\(weather.temperature)ºC", subtitle: "\(weather.weather)")
+                            CardView(category: "Weather",
+                                     note: setting.tempType == .celcius ? "\(weather.celcius)ºC" : "\(weather.ferenheit)ºF",
+                                     subtitle: "\(weather.weather)")
                                 .frame(height: 110)
                             CardView(category: "Time", note: "\(time)", subtitle: nil)
                                 .frame(height: 110)
@@ -65,15 +79,22 @@ struct LocationView: View {
                                       subtitle: "\(notes.first?.date ?? "") by \(notes.first?.writer ?? "")")
                             .frame(height: 110)
                             .onTapGesture {
-                                showSheet = true
+                                showNewDocSheet = true
                             }
                     }
-                    .sheet(isPresented: $showSheet, onDismiss: {
-                        showSheet = false
+                    .sheet(isPresented: $showSetting, onDismiss: {}) {
+                        SettingView(showSheet: $showSetting).environmentObject(viewModel)
+                    }
+                    .sheet(isPresented: $showNewDocSheet, onDismiss: {
+                        showNewDocSheet = false
                         viewModel.loadNotes()
                     }) {
-                        GuestBookView(viewModel: GuestBookViewModel(name: cityName, location: coord, notes: notes), showSheet: $showSheet)
+                        GuestBookView(viewModel: GuestBookViewModel(name: cityName, location: coord, notes: notes),
+                                      showSheet: $showNewDocSheet)
                     }
+                    
+                    Spacer()
+
                 } else {
                     defaultView
                         .opacity(pulseParameter ? 1 : 0.5)

@@ -70,7 +70,7 @@ struct GuestBookView: View {
                 toolbarItems
             }
         }
-        .accentColor(.black)
+        .accentColor(Color(red: 80/255, green: 91/255, blue: 106/255))
     }
 }
 
@@ -87,7 +87,7 @@ extension GuestBookView {
                 Button(action: { showSheet = false }) {
                     Image(systemName: "xmark")
                 }
-                .foregroundColor(.black)
+                .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
             }
         }
     }
@@ -100,17 +100,12 @@ extension GuestBookView {
         Group {
             HStack {
                 VStack(alignment: .leading) {
-                    HStack {
-                        Text("Guest book")
-                            .font(.arial.cityname)
-                            .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
-
-                        Button(action: {}) {
-                            Image(systemName: "info.circle")
-                                .foregroundColor(.gray.opacity(0.5))
-                        }
-                    }
-//                    .padding(.top, 50)
+                    
+                    Text("Guest book")
+                        .font(.arial.cityname)
+                        .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
+                    
+                    //                    .padding(.top, 50)
                     
                     Text("Around \(viewModel.locationName)(\(String(format:"%.1f", viewModel.location.longitude))º, \(String(format:"%.1f", viewModel.location.latitude))º)")
                         .font(.arial.subtitle)
