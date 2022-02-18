@@ -16,6 +16,7 @@ struct LocationView: View {
     @State var showNewDocSheet = false
     @State var showSetting = false
     @State var showNoticeAlert = false
+    @State var showExpiredAlert = false
     
     var body: some View {
         ZStack {
@@ -86,6 +87,9 @@ struct LocationView: View {
                     .alert(isPresented: $showNoticeAlert) {
                         noticeAlert
                     }
+                    .alert(isPresented: $showExpiredAlert) {
+                        expiredAlert
+                    }
                     .sheet(isPresented: $showSetting, onDismiss: {}) {
                         SettingView(showSheet: $showSetting).environmentObject(viewModel)
                     }
@@ -128,6 +132,13 @@ extension LocationView {
         )
     }
     
+    var expiredAlert: Alert {
+        Alert(title: Text("Notice"),
+              message: Text("You have used all of your chances. You have to wait until "),
+              dismissButton: .default(Text("Ok"))
+        )
+    }
+    
     var repeatingAnimation: Animation {
         Animation
             .linear(duration: 1)
@@ -143,7 +154,7 @@ extension LocationView {
         Group {
             Button(action: {
                 if setting.remainingChances <= 0 {
-                    
+                    showExpiredAlert = true
                 } else {
                     viewModel.setRandomLocation()
                     timeManager.waitUntilNextChance()
@@ -161,7 +172,11 @@ extension LocationView {
             
             Spacer()
             
-            Button(action: { viewModel.setCurrentLocation() }) {
+            Button(action: {
+                if !viewModel.isCurrentPosition {
+                    viewModel.setCurrentLocation()
+                }
+            }) {
                 Image(systemName: "scope")
             }
             .foregroundColor(.black)

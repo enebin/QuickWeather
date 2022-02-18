@@ -21,6 +21,7 @@ class LocationDataManager: NSObject, ObservableObject {
     @Published var coord: CLLocationCoordinate2D?
     @Published var time: String?
     @Published var notes: [Note]?
+    @Published var isCurrentPosition = true
     @Published var locationStatus: CLAuthorizationStatus?
 
     override init() {
@@ -39,6 +40,7 @@ class LocationDataManager: NSObject, ObservableObject {
         self.cityName = nil
         self.time = nil
         self.notes = nil
+        self.isCurrentPosition = true
         
         locationManager.requestLocation()
     }
@@ -49,6 +51,7 @@ class LocationDataManager: NSObject, ObservableObject {
         self.cityName = nil
         self.time = nil
         self.notes = nil
+        self.isCurrentPosition = false
         
         let randLat = Int.random(in: -900...900)
         let randLon = Int.random(in: -1800...1800)

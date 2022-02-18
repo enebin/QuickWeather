@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 // TODO: 누르는 횟수 제한
-
+// TODO: 리뷰 유도
 
 // TODO: 서울 데이터 비우기
 // TODO: 아이콘 바꾸기
