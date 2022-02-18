@@ -142,10 +142,16 @@ extension LocationView {
     var functionalButtons: some View {
         Group {
             Button(action: {
-                viewModel.setRandomLocation()
-                timeManager.waitUntilNextChance()
-                if setting.isFirstExcution {
-                    self.showNoticeAlert = true
+                if setting.remainingChances <= 0 {
+                    
+                } else {
+                    viewModel.setRandomLocation()
+                    timeManager.waitUntilNextChance()
+                    setting.setRemainingChancesDecreased()
+                    
+                    if setting.isFirstExcution {
+                        self.showNoticeAlert = true
+                    }
                 }
             }) {
                 Image(systemName: "arrow.clockwise")

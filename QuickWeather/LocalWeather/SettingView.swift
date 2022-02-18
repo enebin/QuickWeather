@@ -22,23 +22,17 @@ struct SettingView: View {
                 
                 // 화씨와 섭씨를 고를 수 있는 옵션을 제공
                 tempUnit
+                Divider()
                 
-                tempUnit
+                // 남은 리로드 가능 개수
+                remainingChances
+                Divider()
+                
+                buyMeACoffee
                 
                 Spacer()
 
-                HStack {
-                    Spacer()
-                    VStack {
-                        Text("Art of blank space")
-                            .font(.arial.cityname)
-                        Text("It will be full... someday...")
-                            .font(.arial.subtitle)
-                    }
-                    .foregroundColor(.gray.opacity(0.3))
-
-                    Spacer()
-                }
+                filler
                 
                 Spacer()
             }
@@ -54,14 +48,60 @@ struct SettingView: View {
 }
 
 extension SettingView {
+    var filler: some View {
+        HStack {
+            Spacer()
+            VStack {
+                Text("Art of blank space")
+                    .font(.arial.cityname)
+                Text("It will be full... someday...")
+                    .font(.arial.subtitle)
+            }
+            .foregroundColor(.gray.opacity(0.3))
+
+            Spacer()
+        }
+    }
+    
+    var buyMeACoffee: some View {
+        VStack(alignment: .leading) {
+            Text("Buy me some servers")
+                .font(.arial.subtitle)
+                .padding(.bottom, 10)
+            
+            HStack {
+                Spacer()
+                Button(action: {
+                    guard let url = URL(string: "https://www.buymeacoffee.com/enebin"),
+                          UIApplication.shared.canOpenURL(url) else { return }
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }) {
+                    Image("bmc")
+                        .resizable()
+                        .frame(height: 30)
+                        .aspectRatio(1, contentMode: .fit)
+                   }
+                .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 5)
+                Spacer()
+            }
+        }
+    }
+    
     var remainingChances: some View {
-        Text("\(setting.remainingChances)")
+        VStack(alignment: .leading) {
+            Text("Remaining number of reloads")
+                .font(.arial.subtitle)
+                .padding(.bottom, 10)
+
+            Text("\(setting.remainingChances)")
+                .font(.arial.description)
+        }
     }
     
     var tempUnit: some View {
         VStack(alignment: .leading) {
             Text("Temperature unit")
-                .font(.arial.description)
+                .font(.arial.subtitle)
             Picker("TempType", selection: $setting.tempType) {
                 Text(Setting.TemperatureType.celcius.rawValue)
                     .tag(Setting.TemperatureType.celcius)

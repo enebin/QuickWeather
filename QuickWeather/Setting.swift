@@ -40,14 +40,16 @@ class Setting: ObservableObject {
         }
     }
     
-    //TODO: Improve here
-    private func loadChanceLeft() {
+    // TODO: Let's use bool
+    private func loadRemainingChances() {
         let userDefaultKey = "remainingChances"
+        let defaultChances = 30
+        
         if let remainingChancesToday = UserDefaults.standard.object(forKey: userDefaultKey) {
             self.remainingChances = remainingChancesToday as! Int
         } else {
-            UserDefaults.standard.set("10", forKey: userDefaultKey)
-            self.remainingChances = 30
+            UserDefaults.standard.set(defaultChances, forKey: userDefaultKey)
+            self.remainingChances = defaultChances
         }
     }
     
@@ -57,13 +59,19 @@ class Setting: ObservableObject {
         self.isFirstExcution = false
     }
     
+    func setRemainingChancesDecreased() {
+        let userDefaultKey = "remainingChances"
+        remainingChances -= 1
+        UserDefaults.standard.set(remainingChances, forKey: userDefaultKey)
+    }
+    
     init() {
         self.tempType = .celcius
         self.remainingChances = 0
         self.isFirstExcution = true
         
         loadTempType()
-        loadChanceLeft()
+        loadRemainingChances()
         checkFirstExcution()
         
         $tempType
