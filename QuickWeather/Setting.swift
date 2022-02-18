@@ -13,6 +13,7 @@ class Setting: ObservableObject {
     
     @Published var tempType: TemperatureType
     @Published var isFirstExcution: Bool
+    @Published var isFirstToday: Bool
     @Published var remainingChances: Int
     
     private func loadTempType() {
@@ -53,6 +54,30 @@ class Setting: ObservableObject {
         }
     }
     
+    private func checkFirstToday() {
+        let userDefaultKey = "savedDate"
+        let currentDate = Calendar.current.component(.day, from: Date())
+        
+        if let savedDate = UserDefaults.standard.object(forKey: userDefaultKey) {
+            if savedDate as! Int == currentDate {
+                self.isFirstToday = false
+            } else {
+                updateIsFirstToday()
+            }
+        } else {
+            UserDefaults.standard.set(currentDate, forKey: userDefaultKey)
+            self.isFirstToday = true
+        }
+    }
+    
+    func updateIsFirstToday() {
+        let userDefaultKey = "savedDate"
+        let currentDate = Calendar.current.component(.day, from: Date())
+
+        UserDefaults.standard.set(currentDate, forKey: userDefaultKey)
+        self.isFirstToday = true
+    }
+    
     func setIsFirstExecutionFalse() {
         let userDefaultKey = "isFirstExcution"
         UserDefaults.standard.set(false, forKey: userDefaultKey)
@@ -69,10 +94,12 @@ class Setting: ObservableObject {
         self.tempType = .celcius
         self.remainingChances = 0
         self.isFirstExcution = true
+        self.isFirstToday = false
         
         loadTempType()
         loadRemainingChances()
         checkFirstExcution()
+        checkFirstToday()
         
         $tempType
             .sink { tempType in
