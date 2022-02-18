@@ -47,6 +47,14 @@ struct LocationView: View {
                             RoundedRectangle(cornerRadius: 15)
                         )
                         .padding(.bottom, 18)
+                        .alert(isPresented: $showNoticeAlert) {
+                            noticeAlert
+                        }
+                        .onAppear {
+                            if setting.isFirstExcution {
+                                self.showNoticeAlert = true
+                            }
+                        }
                     
                     Text("It seems you're at")
                         .font(.arial.subtitle)
@@ -83,9 +91,6 @@ struct LocationView: View {
                             .onTapGesture {
                                 showNewDocSheet = true
                             }
-                    }
-                    .alert(isPresented: $showNoticeAlert) {
-                        noticeAlert
                     }
                     .alert(isPresented: $showExpiredAlert) {
                         expiredAlert
@@ -125,7 +130,7 @@ extension LocationView {
     
     var noticeAlert: Alert {
         Alert(title: Text("Notice"),
-              message: Text("For now, only 30 reloads are allowed per day. You can check your remaining chances in the setting. I will offer more chances when I can afford server cost. Sorry 🥲"),
+              message: Text("Welcome to WeatherVenture! You can travel around the world with this app and come across with the marks left by a pioneer who's already visited the spot you stop by. \n Unfortunately, for now, only 30 reloads are allowed per day. You can check your remaining chances in the setting. I'll offer more chances when I can afford more server cost. Sorry 🥲"),
               dismissButton: .default(Text("Don't show again"),
                                       action: { setting.setIsFirstExecutionFalse()
         })
@@ -159,10 +164,6 @@ extension LocationView {
                     viewModel.setRandomLocation()
                     timeManager.waitUntilNextChance()
                     setting.setRemainingChancesDecreased()
-                    
-                    if setting.isFirstExcution {
-                        self.showNoticeAlert = true
-                    }
                 }
             }) {
                 Image(systemName: "arrow.clockwise")

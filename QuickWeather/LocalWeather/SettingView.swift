@@ -89,7 +89,7 @@ extension SettingView {
     
     var remainingChances: some View {
         VStack(alignment: .leading) {
-            Text("Remaining number of reloads")
+            Text("Remaining number of spots you can visit today")
                 .font(.arial.subtitle)
                 .padding(.bottom, 10)
 
