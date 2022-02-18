@@ -28,10 +28,12 @@ struct SettingView: View {
                 remainingChances
                 Divider()
                 
+                // 도네
                 buyMeACoffee
                 
                 Spacer()
 
+                // 빈칸 채우기
                 filler
                 
                 Spacer()

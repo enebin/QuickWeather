@@ -66,6 +66,9 @@ struct LocationView: View {
                             .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
                         
                         functionalButtons
+                            .alert(isPresented: $showExpiredAlert) {
+                                expiredAlert
+                            }
                     }
                     .padding(.bottom, 48)
                     
@@ -91,9 +94,6 @@ struct LocationView: View {
                             .onTapGesture {
                                 showNewDocSheet = true
                             }
-                    }
-                    .alert(isPresented: $showExpiredAlert) {
-                        expiredAlert
                     }
                     .sheet(isPresented: $showSetting, onDismiss: {}) {
                         SettingView(showSheet: $showSetting).environmentObject(viewModel)
@@ -129,10 +129,13 @@ extension LocationView {
     }
     
     var noticeAlert: Alert {
-        Alert(title: Text("Notice"),
-              message: Text("Welcome to WeatherVenture! You can travel around the world with this app and come across with the marks left by a pioneer who's already visited the spot you stop by. \n Unfortunately, for now, only 30 reloads are allowed per day. You can check your remaining chances in the setting. I'll offer more chances when I can afford more server cost. Sorry 🥲"),
-              dismissButton: .default(Text("Don't show again"),
-                                      action: { setting.setIsFirstExecutionFalse()
+        Alert(title:
+                Text("Notice"),
+              message:
+                Text("Welcome to WeatherVenture! You can travel around the world with this app and come across with the marks left by a pioneer who's already visited the spot you stop by. \n Unfortunately, for now, only 30 reloads are allowed per day. You can check your remaining chances in the setting. I'll offer more chances when I can afford more server cost. Sorry 🥲"),
+              dismissButton:
+                    .default(Text("Don't show again"),
+                             action: { setting.setIsFirstExecutionFalse()
         })
         )
     }
