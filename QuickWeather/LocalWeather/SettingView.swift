@@ -7,18 +7,22 @@
 
 import SwiftUI
 
+/// 톱니바퀴 누르면 나오는 세팅 뷰
 struct SettingView: View {
     @EnvironmentObject var setting: Setting
     @Binding var showSheet: Bool
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 20) {
                 Text("Setting")
                     .font(.arial.cityname)
                     .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
                     .padding(.vertical, 10)
-                                
+                
+                // 화씨와 섭씨를 고를 수 있는 옵션을 제공
+                tempUnit
+                
                 tempUnit
                 
                 Spacer()
@@ -50,10 +54,14 @@ struct SettingView: View {
 }
 
 extension SettingView {
+    var remainingChances: some View {
+        Text("\(setting.remainingChances)")
+    }
+    
     var tempUnit: some View {
         VStack(alignment: .leading) {
             Text("Temperature unit")
-                .font(.arial.subtitle)
+                .font(.arial.description)
             Picker("TempType", selection: $setting.tempType) {
                 Text(Setting.TemperatureType.celcius.rawValue)
                     .tag(Setting.TemperatureType.celcius)

@@ -38,7 +38,7 @@ struct NewDocumentView: View {
         .onAppear {
             if viewModel.isFirst {
                 viewModel.showAlertRoutine(title: "Notice",
-                                           message: "You can't edit or delete your message after you uploaded. Keep this in mind!")
+                                           message: "You can't edit or delete your message after you upload it. Keep this in mind!")
             }
         }
         .alert(isPresented: $viewModel.showAlert) {

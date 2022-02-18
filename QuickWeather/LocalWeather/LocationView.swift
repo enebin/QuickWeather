@@ -15,6 +15,7 @@ struct LocationView: View {
     @State var pulseParameter = true
     @State var showNewDocSheet = false
     @State var showSetting = false
+    @State var showNoticeAlert = false
     
     var body: some View {
         ZStack {
@@ -59,7 +60,7 @@ struct LocationView: View {
                     }
                     .padding(.bottom, 48)
                     
-                    Text("More about here")
+                    Text("More about the place")
                         .font(.arial.subtitle)
                         .foregroundColor(.gray)
                         .padding(.bottom, 18)
@@ -81,6 +82,9 @@ struct LocationView: View {
                             .onTapGesture {
                                 showNewDocSheet = true
                             }
+                    }
+                    .alert(isPresented: $showNoticeAlert) {
+                        noticeAlert
                     }
                     .sheet(isPresented: $showSetting, onDismiss: {}) {
                         SettingView(showSheet: $showSetting).environmentObject(viewModel)
@@ -115,6 +119,15 @@ extension LocationView {
         Color(red: 248/255, green: 248/255, blue: 248/255)
     }
     
+    var noticeAlert: Alert {
+        Alert(title: Text("Notice"),
+              message: Text("For now, only 30 reloads are allowed per day. You can check your remaining chances in the setting. I will offer more chances when I can afford server cost. Sorry 🥲"),
+              dismissButton: .default(Text("Don't show again"),
+                                      action: { setting.setIsFirstExecutionFalse()
+        })
+        )
+    }
+    
     var repeatingAnimation: Animation {
         Animation
             .linear(duration: 1)
@@ -131,6 +144,9 @@ extension LocationView {
             Button(action: {
                 viewModel.setRandomLocation()
                 timeManager.waitUntilNextChance()
+                if setting.isFirstExcution {
+                    self.showNoticeAlert = true
+                }
             }) {
                 Image(systemName: "arrow.clockwise")
             }

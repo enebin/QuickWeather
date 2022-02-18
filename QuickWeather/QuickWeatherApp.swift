@@ -8,11 +8,12 @@
 import SwiftUI
 import Firebase
 
-// TODO: 누르는 횟수 제한 + 스토어 연동하기
+// TODO: 누르는 횟수 제한
+
 
 // TODO: 서울 데이터 비우기
 // TODO: 아이콘 바꾸기
-
+// TODO: 스토어 연동하기
 
 @main
 struct QuickWeatherApp: App {

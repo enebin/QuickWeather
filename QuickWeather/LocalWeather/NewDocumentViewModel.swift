@@ -20,10 +20,11 @@ class NewDocumentViewModel: ObservableObject {
     @Published var isFirst = true
     
     init() {
-        let userDefaultIsFirst = UserDefaults.standard.object(forKey: "isFirst")
+        let userDefaultKey = "isFirstNewDoc"
+        let userDefaultIsFirst = UserDefaults.standard.object(forKey: userDefaultKey)
         
         if userDefaultIsFirst == nil {
-            UserDefaults.standard.set(true, forKey: "isFirst")
+            UserDefaults.standard.set(true, forKey: userDefaultKey)
         } else {
             self.isFirst = userDefaultIsFirst as! Bool
         }

@@ -12,7 +12,8 @@ class Setting: ObservableObject {
     private var subsriptions = Set<AnyCancellable>()
     
     @Published var tempType: TemperatureType
-    @Published var chanceLeft: Int
+    @Published var isFirstExcution: Bool
+    @Published var remainingChances: Int
     
     private func loadTempType() {
         if let defaultTempUnit = UserDefaults.standard.object(forKey: "tempUnit") {
@@ -28,22 +29,42 @@ class Setting: ObservableObject {
         }
     }
     
+    private func checkFirstExcution() {
+        let userDefaultKey = "isFirstExcution"
+        let userDefaultIsFirst = UserDefaults.standard.object(forKey: userDefaultKey)
+        
+        if userDefaultIsFirst == nil {
+            UserDefaults.standard.set(true, forKey: userDefaultKey)
+        } else {
+            self.isFirstExcution = userDefaultIsFirst as! Bool
+        }
+    }
+    
     //TODO: Improve here
     private func loadChanceLeft() {
-        if let chanceLeftToday = UserDefaults.standard.object(forKey: "chanceLeft") {
-            self.chanceLeft = chanceLeftToday as! Int
+        let userDefaultKey = "remainingChances"
+        if let remainingChancesToday = UserDefaults.standard.object(forKey: userDefaultKey) {
+            self.remainingChances = remainingChancesToday as! Int
         } else {
-            UserDefaults.standard.set("10", forKey: "chanceLeft")
-            self.chanceLeft = 10
+            UserDefaults.standard.set("10", forKey: userDefaultKey)
+            self.remainingChances = 30
         }
+    }
+    
+    func setIsFirstExecutionFalse() {
+        let userDefaultKey = "isFirstExcution"
+        UserDefaults.standard.set(false, forKey: userDefaultKey)
+        self.isFirstExcution = false
     }
     
     init() {
         self.tempType = .celcius
-        self.chanceLeft = 0
+        self.remainingChances = 0
+        self.isFirstExcution = true
         
         loadTempType()
-//        loadChanceLeft()
+        loadChanceLeft()
+        checkFirstExcution()
         
         $tempType
             .sink { tempType in
