@@ -10,7 +10,6 @@ import Firebase
 
 // TODO: 누르는 횟수 제한 + 스토어 연동하기
 
-// TODO: Mini 화면 최적화
 // TODO: 서울 데이터 비우기
 // TODO: 아이콘 바꾸기
 
@@ -27,7 +26,7 @@ struct QuickWeatherApp: App {
     var body: some Scene {
         WindowGroup {
             if let permission = localDataManager.locationStatus {
-                if permission == .denied {
+                if permission == .denied || permission == .notDetermined {
                     askForPermission
                         .padding(.horizontal, 35)
                 } else {
