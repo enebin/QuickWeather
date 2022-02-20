@@ -170,7 +170,6 @@ extension LocationView {
                     viewModel.setRandomLocation()
                     timeManager.waitUntilNextChance()
                     setting.setRemainingChancesDecreased()
-                    setting.showReview()
                 }
             }) {
                 Image(systemName: "arrow.clockwise")

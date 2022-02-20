@@ -19,7 +19,7 @@ class Setting: ObservableObject {
     @Published var isFirstToday: Bool
     @Published var remainingChances: Int
     
-    func showReview() {
+    private func showReview() {
         if let scene = UIApplication.shared.connectedScenes.first(where: {
             $0.activationState == .foregroundActive
         }) as? UIWindowScene {
@@ -77,8 +77,7 @@ class Setting: ObservableObject {
             if savedDate as! Int == currentDate {
                 // A day has not passed
                 self.isFirstToday = false
-                
-                print("###\(UserDefaults.standard.object(forKey: keyContainer.reviewRequestKey))")
+
                 // Check if a day elapsed after user executed app first time
                 if let time = UserDefaults.standard.object(forKey: keyContainer.firstExecutionTimeKey),
                    let isRequested = UserDefaults.standard.object(forKey: keyContainer.reviewRequestKey),
