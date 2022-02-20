@@ -16,7 +16,7 @@ class Setting: ObservableObject {
     @Published var isFirstToday: Bool
     @Published var remainingChances: Int
     
-    private func loadTempType() {
+    private func loadTemperatureUnit() {
         if let defaultTempUnit = UserDefaults.standard.object(forKey: "tempUnit") {
             if let tempType = TemperatureType(rawValue: defaultTempUnit as! String) {
                 self.tempType = tempType
@@ -54,15 +54,19 @@ class Setting: ObservableObject {
         }
     }
     
-    private func checkFirstToday() {
+    func checkFirstToday() {
         let userDefaultKey = "savedDate"
         let currentDate = Calendar.current.component(.day, from: Date())
         
         if let savedDate = UserDefaults.standard.object(forKey: userDefaultKey) {
+            print(currentDate, savedDate)
             if savedDate as! Int == currentDate {
                 self.isFirstToday = false
             } else {
-                updateIsFirstToday()
+                // Set isFirsToday true and chances full
+                UserDefaults.standard.set(currentDate, forKey: userDefaultKey)
+                setRemainingChancesFull()
+                self.isFirstToday = true
             }
         } else {
             UserDefaults.standard.set(currentDate, forKey: userDefaultKey)
@@ -70,16 +74,16 @@ class Setting: ObservableObject {
         }
     }
     
-    func updateIsFirstToday() {
-        let userDefaultKey = "savedDate"
-        let currentDate = Calendar.current.component(.day, from: Date())
-
-        UserDefaults.standard.set(currentDate, forKey: userDefaultKey)
-        self.isFirstToday = true
+    private func setRemainingChancesFull() {
+        let userDefaultKey = "remainingChances"
+        remainingChances = 30
+        
+        UserDefaults.standard.set(remainingChances, forKey: userDefaultKey)
     }
     
     func setIsFirstExecutionFalse() {
         let userDefaultKey = "isFirstExcution"
+        
         UserDefaults.standard.set(false, forKey: userDefaultKey)
         self.isFirstExcution = false
     }
@@ -87,6 +91,7 @@ class Setting: ObservableObject {
     func setRemainingChancesDecreased() {
         let userDefaultKey = "remainingChances"
         remainingChances -= 1
+        
         UserDefaults.standard.set(remainingChances, forKey: userDefaultKey)
     }
     
@@ -96,7 +101,7 @@ class Setting: ObservableObject {
         self.isFirstExcution = true
         self.isFirstToday = false
         
-        loadTempType()
+        loadTemperatureUnit()
         loadRemainingChances()
         checkFirstExcution()
         checkFirstToday()

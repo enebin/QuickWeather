@@ -163,6 +163,7 @@ extension LocationView {
             Button(action: {
                 if setting.remainingChances <= 0 {
                     showExpiredAlert = true
+                    setting.checkFirstToday()
                 } else {
                     viewModel.setRandomLocation()
                     timeManager.waitUntilNextChance()

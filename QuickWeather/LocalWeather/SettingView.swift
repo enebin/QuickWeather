@@ -97,6 +97,9 @@ extension SettingView {
 
             Text("\(setting.remainingChances)")
                 .font(.arial.description)
+            
+            Text("⚠️ Reset every 12AM")
+                .foregroundColor(.gray)
         }
     }
     

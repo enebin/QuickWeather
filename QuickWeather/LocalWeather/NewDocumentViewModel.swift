@@ -25,8 +25,10 @@ class NewDocumentViewModel: ObservableObject {
         
         if userDefaultIsFirst == nil {
             UserDefaults.standard.set(true, forKey: userDefaultKey)
+            self.isFirst = true
         } else {
-            self.isFirst = userDefaultIsFirst as! Bool
+            UserDefaults.standard.set(false, forKey: userDefaultKey)
+            self.isFirst = false
         }
     }
     
