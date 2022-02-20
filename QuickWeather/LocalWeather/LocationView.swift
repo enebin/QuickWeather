@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct LocationView: View {
     @EnvironmentObject var viewModel: LocationDataManager
@@ -22,6 +23,7 @@ struct LocationView: View {
         ZStack {
             background
                 .ignoresSafeArea()
+            
             VStack(alignment: .leading, spacing: 0) {
                 if let weather = viewModel.weather,
                    let coord = viewModel.coord,
@@ -51,7 +53,7 @@ struct LocationView: View {
                             noticeAlert
                         }
                         .onAppear {
-                            if setting.isFirstExcution {
+                            if setting.isFirstExecution {
                                 self.showNoticeAlert = true
                             }
                         }
@@ -168,6 +170,7 @@ extension LocationView {
                     viewModel.setRandomLocation()
                     timeManager.waitUntilNextChance()
                     setting.setRemainingChancesDecreased()
+                    setting.showReview()
                 }
             }) {
                 Image(systemName: "arrow.clockwise")

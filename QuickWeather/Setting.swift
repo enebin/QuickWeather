@@ -7,17 +7,30 @@
 
 import SwiftUI
 import Combine
+import StoreKit
 
 class Setting: ObservableObject {
     private var subsriptions = Set<AnyCancellable>()
+    private let defaultChances = 30
+    private let keyContainer = KeyContainer()
     
     @Published var tempType: TemperatureType
-    @Published var isFirstExcution: Bool
+    @Published var isFirstExecution: Bool
     @Published var isFirstToday: Bool
     @Published var remainingChances: Int
     
+    func showReview() {
+        if let scene = UIApplication.shared.connectedScenes.first(where: {
+            $0.activationState == .foregroundActive
+        }) as? UIWindowScene {
+            SKStoreReviewController.requestReview(in: scene)
+        }
+    }
+    
+    /// Load the setting of temperature unit
     private func loadTemperatureUnit() {
-        if let defaultTempUnit = UserDefaults.standard.object(forKey: "tempUnit") {
+        let userDefaultKey = keyContainer.tempUnitKey
+        if let defaultTempUnit = UserDefaults.standard.object(forKey: userDefaultKey) {
             if let tempType = TemperatureType(rawValue: defaultTempUnit as! String) {
                 self.tempType = tempType
             } else {
@@ -25,26 +38,28 @@ class Setting: ObservableObject {
                 fatalError()
             }
         } else {
-            UserDefaults.standard.set("Celcius", forKey: "tempUnit")
+            UserDefaults.standard.set("Celcius", forKey: userDefaultKey)
             self.tempType = TemperatureType(rawValue: "Celcius")!
         }
     }
     
+    /// Check if the user have ever opened the app after installed
     private func checkFirstExcution() {
-        let userDefaultKey = "isFirstExcution"
-        let userDefaultIsFirst = UserDefaults.standard.object(forKey: userDefaultKey)
+        let userDefaultIsFirst = UserDefaults.standard.object(forKey: keyContainer.firstExecutionKey)
         
         if userDefaultIsFirst == nil {
-            UserDefaults.standard.set(true, forKey: userDefaultKey)
+            UserDefaults.standard.set(true, forKey: keyContainer.firstExecutionKey)
+            UserDefaults.standard.set(false, forKey: keyContainer.reviewRequestKey)
+            UserDefaults.standard.set(Date(), forKey: keyContainer.firstExecutionTimeKey)
         } else {
-            self.isFirstExcution = userDefaultIsFirst as! Bool
+            self.isFirstExecution = userDefaultIsFirst as! Bool
         }
     }
     
-    // TODO: Let's use bool
+    /// Load remaining chances from the storage(UserDefault)
     private func loadRemainingChances() {
-        let userDefaultKey = "remainingChances"
-        let defaultChances = 30
+        let userDefaultKey = keyContainer.remainingChancesKey
+        let defaultChances = self.defaultChances  // MARK: Chances can be adjusted
         
         if let remainingChancesToday = UserDefaults.standard.object(forKey: userDefaultKey) {
             self.remainingChances = remainingChancesToday as! Int
@@ -54,51 +69,73 @@ class Setting: ObservableObject {
         }
     }
     
+    /// Check if user opens the app first time
     func checkFirstToday() {
-        let userDefaultKey = "savedDate"
         let currentDate = Calendar.current.component(.day, from: Date())
         
-        if let savedDate = UserDefaults.standard.object(forKey: userDefaultKey) {
-            print(currentDate, savedDate)
+        if let savedDate = UserDefaults.standard.object(forKey: keyContainer.savedDateKey) {
             if savedDate as! Int == currentDate {
+                // A day has not passed
                 self.isFirstToday = false
+                
+                print("###\(UserDefaults.standard.object(forKey: keyContainer.reviewRequestKey))")
+                // Check if a day elapsed after user executed app first time
+                if let time = UserDefaults.standard.object(forKey: keyContainer.firstExecutionTimeKey),
+                   let isRequested = UserDefaults.standard.object(forKey: keyContainer.reviewRequestKey),
+                   isRequested as! Bool == false
+                {
+                    let current = Date()
+                    print("###\(time) \(isRequested) \(current - (time as! Date))")
+                    if current - (time as! Date) > 60 {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            self.showReview()
+                        }
+                        UserDefaults.standard.set(true, forKey: keyContainer.reviewRequestKey)
+                    }
+                }
+                
             } else {
-                // Set isFirsToday true and chances full
-                UserDefaults.standard.set(currentDate, forKey: userDefaultKey)
+                // A day passed
+                // Set new UserDefault value: Today's date, for later use
+                UserDefaults.standard.set(currentDate, forKey: keyContainer.savedDateKey)
+                
+                // Set remainingChances Full
                 setRemainingChancesFull()
                 self.isFirstToday = true
             }
         } else {
-            UserDefaults.standard.set(currentDate, forKey: userDefaultKey)
+            UserDefaults.standard.set(currentDate, forKey: keyContainer.savedDateKey)
             self.isFirstToday = true
         }
     }
     
+    /// Make remaining chacnes default state
     private func setRemainingChancesFull() {
-        let userDefaultKey = "remainingChances"
-        remainingChances = 30
+        let userDefaultKey = keyContainer.remainingChancesKey
+        remainingChances = self.defaultChances   // MARK: Chances can be adjusted
         
         UserDefaults.standard.set(remainingChances, forKey: userDefaultKey)
     }
     
-    func setIsFirstExecutionFalse() {
-        let userDefaultKey = "isFirstExcution"
-        
-        UserDefaults.standard.set(false, forKey: userDefaultKey)
-        self.isFirstExcution = false
-    }
-    
     func setRemainingChancesDecreased() {
-        let userDefaultKey = "remainingChances"
+        let userDefaultKey = keyContainer.remainingChancesKey
         remainingChances -= 1
         
         UserDefaults.standard.set(remainingChances, forKey: userDefaultKey)
     }
     
+    func setIsFirstExecutionFalse() {
+        let userDefaultKey = keyContainer.firstExecutionKey
+        
+        UserDefaults.standard.set(false, forKey: userDefaultKey)
+        self.isFirstExecution = false
+    }
+    
+    
     init() {
         self.tempType = .celcius
         self.remainingChances = 0
-        self.isFirstExcution = true
+        self.isFirstExecution = true
         self.isFirstToday = false
         
         loadTemperatureUnit()
@@ -118,5 +155,14 @@ extension Setting {
     enum TemperatureType: String {
         case celcius = "Celcius"
         case ferenheit = "Ferenheit"
+    }
+    
+    private struct KeyContainer {
+        let tempUnitKey = "tempUnit"
+        let firstExecutionKey = "isFirstExcution"
+        let firstExecutionTimeKey = "firstExecutionTime"
+        let reviewRequestKey = "isReviewRequested"
+        let remainingChancesKey = "remainingChances"
+        let savedDateKey = "savedDate"
     }
 }

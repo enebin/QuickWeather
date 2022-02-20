@@ -18,3 +18,9 @@ extension Font {
     
     static let arial = Arial()
 }
+
+extension Date {
+    static func - (lhs: Date, rhs: Date) -> TimeInterval {
+        return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
+    }
+}
