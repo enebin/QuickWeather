@@ -85,7 +85,7 @@ class Setting: ObservableObject {
                 {
                     let current = Date()
                     print("###\(time) \(isRequested) \(current - (time as! Date))")
-                    if current - (time as! Date) > 60 {
+                    if current - (time as! Date) > 60 * 60 * 24 {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                             self.showReview()
                         }
@@ -109,7 +109,7 @@ class Setting: ObservableObject {
     }
     
     /// Make remaining chacnes default state
-    private func setRemainingChancesFull() {
+    func setRemainingChancesFull() {
         let userDefaultKey = keyContainer.remainingChancesKey
         remainingChances = self.defaultChances   // MARK: Chances can be adjusted
         

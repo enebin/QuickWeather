@@ -10,6 +10,8 @@ import SwiftUI
 /// 톱니바퀴 누르면 나오는 세팅 뷰
 struct SettingView: View {
     @EnvironmentObject var setting: Setting
+    @ObservedObject var storeManager = StoreManager()
+    
     @Binding var showSheet: Bool
     
     var body: some View {
@@ -29,7 +31,8 @@ struct SettingView: View {
                 Divider()
                 
                 // 도네
-                buyMeACoffee
+                // TODO: IAP로 바꾸기
+                buyMeAServer
                 
                 Spacer()
 
@@ -60,30 +63,45 @@ extension SettingView {
                     .font(.arial.subtitle)
             }
             .foregroundColor(.gray.opacity(0.3))
-
+            
             Spacer()
         }
     }
     
-    var buyMeACoffee: some View {
+    var buyMeAServer: some View {
         VStack(alignment: .leading) {
-            Text("Buy me some servers")
+            Text("Buy me a server")
                 .font(.arial.subtitle)
                 .padding(.bottom, 10)
+                .alert(isPresented: $storeManager.showSuccessAlert) {
+                    Alert(title: Text("Success!"),
+                          message: Text("Your chances are reset. Thanks for your purchase."),
+                          dismissButton: .default(Text("Ok"), action: { setting.setRemainingChancesFull() })
+                    )
+                }
             
             HStack {
                 Spacer()
-                Button(action: {
-                    guard let url = URL(string: "https://www.buymeacoffee.com/enebin"),
-                          UIApplication.shared.canOpenURL(url) else { return }
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }) {
-                    Image("bmc")
-                        .resizable()
-                        .frame(height: 30)
-                        .aspectRatio(1, contentMode: .fit)
-                   }
-                .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 5)
+                if (storeManager.myProducts.first != nil) && storeManager.transactionState != .purchasing {
+                    let product = storeManager.myProducts.first!
+                    Button(action: { storeManager.purchaseProduct(product: product) }) {
+                        Text("Reset remaining chances(\(storeManager.priceStringForProduct(item: product)!))")
+                            .padding()
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke()
+                                    .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 5)
+                            )
+                    }
+                    .alert(isPresented: $storeManager.showFailureAlert) {
+                        Alert(title: Text("Oops!"),
+                              message: Text("For some reasons, failed to purchase. Please try again later."),
+                              dismissButton: .default(Text("Ok"))
+                        )
+                    }
+                } else {
+                    ProgressView()
+                }
                 Spacer()
             }
         }
