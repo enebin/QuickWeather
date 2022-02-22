@@ -110,6 +110,8 @@ struct LocationView: View {
                     
                     Spacer()
 
+                } else if viewModel.isOnline == false {
+                    askForOnline
                 } else {
                     defaultView
                         .opacity(pulseParameter ? 1 : 0.5)
@@ -128,6 +130,24 @@ struct LocationView: View {
 extension LocationView {
     var background: some View {
         Color(red: 248/255, green: 248/255, blue: 248/255)
+    }
+    
+    var askForOnline: some View{
+        Group {
+            VStack(alignment: .leading, spacing: 0) {
+                Spacer()
+                
+                Text("Sorry!")
+                    .font(.arial.cityname)
+                    .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
+                
+                Text("If you want to use our app,\nplease stay online")
+                    .font(.arial.description)
+                    .lineSpacing(3)
+                    .padding(.bottom, 6)
+                Spacer()
+            }
+        }
     }
     
     var noticeAlert: Alert {

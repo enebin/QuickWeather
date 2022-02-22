@@ -10,6 +10,7 @@ import SwiftUI
 struct GuestBookView: View {
     @ObservedObject var viewModel: GuestBookViewModel
     
+    @State var showReportAlert = false
     @State var pulseParameter = false
     @Binding var showSheet: Bool
     typealias CardView = LocationView.CardView
@@ -36,8 +37,29 @@ struct GuestBookView: View {
                             ScrollView(showsIndicators: false) {
                                 VStack(alignment: .center, spacing: 25) {
                                     ForEach(viewModel.pagedNotes, id: \.id) { note in
-                                        CardView(category: "\(note.date)", note: "\"\(note.texts)\"", subtitle: "by \(note.writer)")
-                                            .frame(height: 110)
+                                        ZStack {
+                                            CardView(category: "\(note.date)", note: "\"\(note.texts)\"", subtitle: "by \(note.writer)")
+                                            VStack {
+                                                Spacer()
+                                                HStack(spacing: 2) {
+                                                    Spacer()
+                                                    Button(action:{ showReportAlert = true }) {
+                                                        Image(systemName: "flag")
+                                                        Text("report")
+                                                    }
+                                                    .alert(isPresented: $showReportAlert) {
+                                                        Alert(title: Text("Notice"),
+                                                              message: Text("Thanks for your contribution! We will take care of it as soon as possible."),
+                                                              dismissButton: .default(Text("Ok"))
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                            .font(.arial.subtitle)
+                                            .foregroundColor(.gray.opacity(0.5))
+                                            .padding()
+                                        }
+                                        .frame(height: 110)
                                     }
                                     
                                     HStack {

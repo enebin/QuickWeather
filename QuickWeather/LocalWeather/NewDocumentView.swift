@@ -30,7 +30,7 @@ struct NewDocumentView: View {
                 Spacer()
                 
                 submitButton
-                
+                notice
                 Spacer()
             }
             .padding(.horizontal, 35)
@@ -65,6 +65,11 @@ struct NewDocumentView: View {
 extension NewDocumentView {
     var background: some View {
         Color(red: 248/255, green: 248/255, blue: 248/255)
+    }
+    
+    var notice: some View {
+        Text("⚠️ Inappropriate postings like ads or hate speech, may result in restrictions on service use and deletion of postings. In severe cases, legal action can be taken.")
+            .font(.arial.subtitle)
     }
     
     var header: some View {

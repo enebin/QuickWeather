@@ -85,7 +85,7 @@ class Setting: ObservableObject {
                 {
                     let current = Date()
                     print("###\(time) \(isRequested) \(current - (time as! Date))")
-                    if current - (time as! Date) > 60 * 60 * 24 {
+                    if current - (time as! Date) > 60 * 60 * 24 { // 60초 60분 24시간
                         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                             self.showReview()
                         }

@@ -7,14 +7,18 @@
 
 import Foundation
 import CoreLocation
+import Network
 import Combine
 
 // TODO: Auth handling
 
 class LocationDataManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
+    private let monitor = NWPathMonitor()
+    private let queue = DispatchQueue(label: "InternetConnectionMonitor")
     private var subscriptions = Set<AnyCancellable>()
     
+    @Published var isOnline: Bool?
     @Published var weather: LocalWeather?
     @Published var countryName: String?
     @Published var cityName: String?
@@ -32,6 +36,21 @@ class LocationDataManager: NSObject, ObservableObject {
             self.locationManager.requestWhenInUseAuthorization()
             self.locationManager.requestLocation()
         }
+        
+        monitor.pathUpdateHandler = { pathUpdateHandler in
+            if pathUpdateHandler.status == .satisfied {
+                DispatchQueue.main.async { 
+                    self.isOnline = true
+                    self.locationManager.requestLocation()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.isOnline = false
+                }
+            }
+        }
+        
+        monitor.start(queue: queue)
     }
     
     func setCurrentLocation() {
