@@ -18,6 +18,7 @@ struct LocationView: View {
     @State var showSetting = false
     @State var showNoticeAlert = false
     @State var showExpiredAlert = false
+    @State var showNetworkError = false
     
     var body: some View {
         ZStack {
@@ -113,13 +114,21 @@ struct LocationView: View {
                 } else if viewModel.isOnline == false {
                     askForOnline
                 } else {
-                    defaultView
-                        .opacity(pulseParameter ? 1 : 0.5)
-                        .onAppear {
-                            withAnimation(self.repeatingAnimation) {
-                                self.pulseParameter.toggle()
+                    if !showNetworkError {
+                        defaultView
+                            .opacity(pulseParameter ? 1 : 0.5)
+                            .onAppear {
+                                withAnimation(self.repeatingAnimation) {
+                                    self.pulseParameter.toggle()
+                                }
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
+                                    self.showNetworkError = true
+                                }
                             }
-                        }
+                    } else {
+                        askForOnline
+                    }
                 }
             }
             .padding(.horizontal, 20)
@@ -132,19 +141,40 @@ extension LocationView {
         Color(red: 248/255, green: 248/255, blue: 248/255)
     }
     
+    var reload: some View {
+        Button(action: { viewModel.setCurrentLocation() }) {
+            HStack {
+                Image(systemName: "arrow.clockwise")
+                Text("Reload")
+            }
+        }
+        .foregroundColor(.black)
+        .padding(.vertical, 10)
+        .padding(.horizontal)
+        .overlay(RoundedRectangle(cornerRadius: 10).stroke(.black, lineWidth: 1.5))
+    }
+    
     var askForOnline: some View{
         Group {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
                 
-                Text("Sorry!")
+                Text("Oops!")
                     .font(.arial.cityname)
                     .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
+                    .padding(.vertical)
                 
-                Text("If you want to use our app,\nplease stay online")
+                Text("Some errors happen.\nPlease try again!")
                     .font(.arial.description)
                     .lineSpacing(3)
-                    .padding(.bottom, 6)
+                    .padding(.bottom, 30)
+                
+                HStack {
+                    Spacer()
+                    reload
+                    Spacer()
+                }
+                
                 Spacer()
             }
         }
@@ -183,6 +213,8 @@ extension LocationView {
     var functionalButtons: some View {
         Group {
             Button(action: {
+                self.showNetworkError = false
+
                 if setting.remainingChances <= 0 {
                     showExpiredAlert = true
                     setting.checkFirstToday()
@@ -200,14 +232,16 @@ extension LocationView {
             Spacer()
             
             Button(action: {
-                if !viewModel.isCurrentPosition {
-                    viewModel.setCurrentLocation()
-                }
+                self.showNetworkError = false
+
+                timeManager.waitUntilNextChance()
+                viewModel.setCurrentLocation()
             }) {
                 Image(systemName: "scope")
             }
             .foregroundColor(.black)
-            
+            .disabled(!timeManager.isActive)
+
 //            Button(action: { }) {
 //                Image(systemName: "square.and.arrow.up")
 //            }
