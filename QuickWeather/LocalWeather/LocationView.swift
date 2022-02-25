@@ -123,7 +123,7 @@ struct LocationView: View {
                                 }
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
-                                    self.showNetworkError = true
+//                                    self.showNetworkError = true
                                 }
                             }
                     } else {
@@ -159,12 +159,12 @@ extension LocationView {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
                 
-                Text("Oops!")
+                Text("Error")
                     .font(.arial.cityname)
                     .foregroundColor(Color(red: 80/255, green: 91/255, blue: 106/255))
                     .padding(.vertical)
                 
-                Text("Some errors happen.\nPlease try again!")
+                Text("Network seems unstable.\nPlease check you connection and try again!")
                     .font(.arial.description)
                     .lineSpacing(3)
                     .padding(.bottom, 30)
